@@ -1,0 +1,11 @@
+.CardNews {
+  .Button--link {
+    @screen lg {
+      transform: none;
+
+      &::after {
+        @apply block z-1 pointer-events-auto;
+      }
+    }
+  }
+}

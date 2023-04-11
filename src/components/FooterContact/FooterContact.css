@@ -1,0 +1,70 @@
+.FooterContact {
+  &__Item {
+    & + & {
+      @apply border-t lg:border-t-0 lg:border-l border-black border-opacity-20;
+    }
+
+    &:nth-child(odd) { @apply lg:justify-end; }
+    &:nth-child(even) { @apply lg:justify-start; }
+  }
+}
+
+.NewsletterForm {
+  [type='text'],
+  [type='email'],
+  select {
+    appearance: none;
+    @apply w-full px-0 focus:outline-none;
+    @apply font-sans font-book text-14 leading-24 text-left;
+    @apply rounded-none border-b border-gray-300;
+
+    @screen lg {
+      @apply font-medium text-16;
+      min-width: theme('width.160');
+      padding: calc(theme('padding.8') - 1px) *;
+    }
+  }
+
+  input::placeholder {
+    color: currentColor;
+    opacity: 1;
+  }
+
+  [type='text'],
+  [type='email'] {
+    @screen lg {
+      min-width: 16.5rem;
+    }
+  }
+
+  select {
+    --caret-size: theme('width.16');
+
+    appearance: none;
+    padding-right: calc(var(--caret-size) + theme('padding.8'));
+    background-image: url('data:image/svg+xml, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.3 9.3a1 1 0 011.4 0l5.3 5.29 5.3-5.3a1 1 0 111.4 1.42l-6 6a1 1 0 01-1.4 0l-6-6a1 1 0 010-1.42z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-size: var(--caret-size);
+
+    @screen lg {
+      --caret-size: theme('width.24');
+    }
+  }
+
+  &__Field {
+    @apply relative;
+
+    &::after {
+      content: "";
+      @apply absolute inset-x-0 bottom-0 h-px bg-current;
+      transform-origin: 0 0;
+      transform: scaleX(0);
+      transition: transform .3s ease;
+    }
+
+    &:focus-within::after {
+      transform: none;
+    }
+  }
+}

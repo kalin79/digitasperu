@@ -1,0 +1,11 @@
+.LegalPage {
+  &__Content {
+    h3 {
+      @apply mt-48 mb-8 lg:mt-56;
+    }
+  }
+
+  &__TableOfContents {
+    max-height: calc(theme('height.screen') - theme('inset.scroll-padding'));
+  }
+}

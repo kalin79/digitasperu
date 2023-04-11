@@ -1,0 +1,26 @@
+<div class="RelatedEntities container py-96 lg:py-200 bg-muted overflow-hidden" role="complementary" x-data>
+  {% if title %}
+    <div class="flex justify-between items-baseline mb-24 lg:mt-32 lg:mb-48">
+      <div class="title-big" x-appear:title>{{ title }}</div>
+      {% if eyebrow %}
+        <span class="eyebrow">{{ eyebrow }}</span>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {% embed '@Components/Slider/Slider.twig' with { class: 'RelatedEntities__Slider' } %}
+    {% block slides %}
+      <div class="RelatedEntities__Slides Slider__Slides grid grid-flow-col gap-x-gutter">
+        {% for item in items %}
+          <div class="RelatedEntities__Slide Slider__Slide w-screen max-w-9/12 {{ type == 'project' ? 'lg:max-w-5/12' : 'lg:max-w-4/12' }}">
+            {% if type == 'project' %}
+              {% include '@Components/CardProject/CardProject.twig' with item only %}
+            {% elseif type == 'insight' %}
+              {% include '@Components/CardInsight/CardInsight.twig' with item only %}
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    {% endblock %}
+  {% endembed %}
+</div>

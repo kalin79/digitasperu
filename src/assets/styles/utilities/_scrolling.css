@@ -1,0 +1,7 @@
+@layer utilities {
+  @responsive {
+    .scrolling-hidden {
+      &::-webkit-scrollbar { @apply hidden; }
+    }
+  }
+}

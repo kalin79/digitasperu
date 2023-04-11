@@ -1,0 +1,67 @@
+{% set tabpanels = '' %}
+
+<div class="ArchivesNews py-120 lg:py-232 bg-global" x-data="Tabs">
+  <div class="container">
+    <h1 class="lg:max-w-9/12 mb-56 lg:mb-160 title-big" x-appear:title="$store.app.isReady">{{ title }}</h1>
+  </div>
+
+  <div x-ref="body" class="container">
+    <div
+      x-ref="scroller"
+      class="ArchivesNews__Scroller col-span-full lg:col-start-2 lg:col-span-4 border-b border-gray-200 lg:border-b-0 overflow-x-scroll lg:overflow-x-visible scrolling-hidden"
+    >
+      <div class="ArchivesNews__Years lg:sticky lg:top-scroll-padding flex py-24 lg:py-0">
+        <div
+          x-ref="tablist"
+          class="flex lg:flex-col -my-8 -mx-12 title-small lg:title-big"
+          role="tablist"
+          aria-orientation="vertical"
+          aria-label="Years"
+        >
+          {% for year in years %}
+            {% set tabId = 'ArchivesNewsYear' ~ loop.index %}
+            <button
+              type="button"
+              x-ref="tab"
+              class="ArchivesNews__Tab py-8 px-12 text-left"
+              role="tab"
+              aria-selected="{{ loop.first ? 'true' : 'false' }}"
+              x-bind:aria-selected="isTabActive('{{ tabId }}')"
+              aria-controls="{{ tabId }}Panel"
+              id="{{ tabId }}"
+              {% if not loop.first %}tabindex="-1"{% endif %}
+              x-bind:tabindex="isTabActive('{{ tabId }}') ? false : -1"
+              x-bind="tabProps"
+              x-on:click="activateTab('{{ tabId }}')"
+              x-on:focus="activateTab('{{ tabId }}')"
+            >
+              <span class="ArchivesNews__TabLabel opacity-20">{{ year.title }}</span>
+            </button>
+            {% set tabpanels %}
+              {{ tabpanels }}
+              <div
+                class="ArchivesNews__TabPanel"
+                tabindex="0"
+                role="tabpanel"
+                id="{{ tabId }}Panel"
+                aria-labelledby="{{ tabId }}"
+                x-bind:hidden="!isTabActive('{{ tabId }}')"
+              >
+                {% for news in year.items %}
+                  <div class="ArchivesNews__Item lg:mb-20 py-40 border-b border-gray-200">
+                    {% include '@Components/CardNews/CardNews.twig' with news only %}
+                  </div>
+                {% endfor %}
+              </div>
+            {% endset %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <div class="col-span-default lg:col-start-7 lg:col-span-5">
+      <div class="lg:-mt-40">
+        {{ tabpanels }}
+      </div>
+    </div>
+  </div>
+</div>

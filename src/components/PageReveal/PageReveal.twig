@@ -1,0 +1,21 @@
+<div
+  x-data="PageReveal"
+  x-show="isVisible"
+  class="PageReveal fixed z-transition inset-0 overflow-hidden"
+>
+  <div x-ref="bgPrimary" class="PageReveal__Background absolute inset-0 bg-primary"></div>
+  <div x-ref="bgBlack" class="PageReveal__Background absolute inset-0 bg-black"></div>
+
+  <div
+    x-cloak
+    x-show="showIntro"
+    class="PageReveal__Container absolute inset-0 text-white"
+  >
+    <div x-ref="frame" class="absolute inset-0 flex justify-center items-center">
+      <img src="/assets/svg/logo-digitas.svg" alt="Digitas" width="120" height="17">
+    </div>
+    <div x-ref="frame" class="absolute inset-0 flex justify-center items-center opacity-0">
+      {% include '@Components/Icon/Icon.twig' with { icon: 'logo-unicorn', class: 'fill-current' } only %}
+    </div>
+  </div>
+</div>

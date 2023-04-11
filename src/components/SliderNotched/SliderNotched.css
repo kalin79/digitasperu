@@ -1,0 +1,5 @@
+.SliderNotched {
+  &__Track {
+    will-change: transform;
+  }
+}

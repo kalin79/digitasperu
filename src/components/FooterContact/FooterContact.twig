@@ -1,0 +1,68 @@
+<div class="FooterContact grid grid-cols-1 w-full lg:max-w-8/12 mx-auto text-center bg-white" x-data="Accordions">
+  <div class="row-start-1 col-start-1 grid grid-cols-10 lg:grid-cols-8 gap-x-gutter py-16 lg:py-72">
+    <div class="col-span-full title-medium mt-16 mb-4 lg:mt-24 lg:mb-56">{{ title }}</div>
+
+    <div class="FooterContact__List col-span-default lg:col-span-full flex flex-col lg:flex-row lg:justify-center">
+      {% for contact in contacts %}
+        {% set id = 'FooterContact' ~ loop.index %}
+
+        <div class="FooterContact__Item Accordions__Item flex-1 flex lg:py-8 lg:px-80">
+          <div class="flex flex-col items-center w-full lg:w-auto lg:space-y-20">
+            <div
+              class="flex justify-between items-center w-full py-24 lg:py-0 leading-16 text-left lg:text-center"
+              x-bind:aria-expanded="isActive({{ loop.index0 }})"
+              aria-controls="{{ id ~ 'Body' }}"
+              id="{{ id }}"
+              x-on:click="toggleItem({{ loop.index0 }})"
+            >
+              <span class="flex-1 cap-title-small-italic uppercase">{{ contact.type }}</span>
+              <span class="lg:hidden">
+                {% include '@Components/Icon/Icon.twig' with { icon: 'plus' } only %}
+              </span>
+            </div>
+            <div
+              x-bind:class="{ 'hidden': !isActive({{ loop.index0 }}) }"
+              class="flex-1 flex lg:flex flex-col items-center pt-8 pb-32 lg:py-0 space-y-20"
+              role="region"
+              aria-labelledby="{{ id }}"
+              id="{{ id ~ 'Body' }}"
+            >
+              {% include '@Components/Author/Author.twig' with contact.person|merge({ class: 'my-auto' }) only %}
+              {% include '@Components/Button/Button.twig' with { label: contact.email, link: 'mailto:' ~ contact.email } only %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="row-start-2 col-start-1 grid grid-cols-10 lg:block py-32 text-center lg:text-left bg-muted">
+    <div class="col-span-default">
+      <form class="NewsletterForm" action="" method="POST" aria-labelledby="newsletterFormTitle">
+        <div class="flex flex-col lg:flex-row lg:flex-wrap justify-center lg:items-center lg:py-4 space-y-24 lg:space-y-0 lg:space-x-32">
+          <div class="title-small" id="newsletterFormTitle">Let’s connect</div>
+          <div class="NewsletterForm__Field">
+            <label for="newsletterFormField1" class="sr-only">Your Email</label>
+            <input type="email" id="newsletterFormField1" name="EMAIL" placeholder="Your Email" required />
+          </div>
+          {# <div class="NewsletterForm__Field">
+            <label for="newsletterFormField2" class="sr-only">Your interest</label>
+            <select id="newsletterFormField2" name="INTEREST" required>
+              <option disabled selected>Your interest</option>
+              <option value="Value 1">Value 1</option>
+              <option value="Value 2">Value 2</option>
+              <option value="Value 3">Value 3</option>
+            </select>
+          </div> #}
+          <div>
+            {% include '@Components/Button/Button.twig' with {
+              tag: 'button',
+              label: 'Submit',
+              attr: 'type="submit"'
+            } only %}
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+.CaseModule {
+  @apply relative -mt-global py-global;
+
+  &::before {
+    content: "";
+    @apply absolute inset-0 -z-2 bg-global;
+    transform: translateZ(0); /* fix Safari stacking context issue */
+  }
+
+  &:only-child {
+    /* for preview mode in Storybook */
+    @apply my-0 py-global;
+  }
+
+  &[class*=" bg-"]::before {
+    background-color: inherit;
+  }
+
+  &.bg-primary {
+    @apply z-1 mt-0;
+
+    & + * {
+      @apply mt-0;
+    }
+    & + & {
+      @apply -mt-global;
+    }
+  }
+
+  &.bg-muted {
+    @apply relative z-0;
+
+    &::before,
+    &::after {
+      content: "";
+      @apply absolute inset-0 -z-1;
+      background-color: inherit;
+    }
+    &::before {
+      @apply top-auto bottom-full;
+      height: calc(0.5 * var(--prev-module-height) - theme('margin.global'));
+    }
+    &::after {
+      @apply top-full bottom-auto;
+      height: calc(0.5 * var(--next-module-height) - theme('margin.global'));
+    }
+  }
+}

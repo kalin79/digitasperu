@@ -1,0 +1,26 @@
+.NewsContent {
+  &:not(:first-child) {
+    @apply -mt-32 lg:mt-0;
+  }
+
+  &__Body {
+    @apply text-18 lg:text-20 lg:leading-32;
+
+    > * {
+      @apply lg:w-col-6/12 lg:max-w-6/12 lg:mx-auto;
+    }
+
+    > blockquote,
+    > .blockquote {
+      @apply w-col-9/12 lg:w-col-8/12 lg:max-w-8/12 ml-auto my-40 lg:my-104;
+    }
+
+    a {
+      @apply font-heavy underline;
+    }
+
+    h2, h3, h4, h5, h6 {
+      @apply mt-48 mb-16 text-18 lg:text-20 leading-24 font-heavy;
+    }
+  }
+}

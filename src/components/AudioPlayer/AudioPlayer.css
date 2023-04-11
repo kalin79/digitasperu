@@ -1,0 +1,66 @@
+.AudioPlayer {
+  &__Cursor {
+    .RoundButton {
+      --RoundButton-bg: theme('backgroundColor.secondary');
+      --RoundButton-color: theme('textColor.primary-contrast');
+      font-size: 1.5rem;
+      @apply opacity-0 invisible;
+      transform: scale(0);
+      transition: transform .3s ease, opacity .3s ease, visibility .3s ease;
+
+      &.is-visible {
+        @apply opacity-100 visible;
+        transform: none;
+        transition-delay: .4s;
+      }
+
+      &__Inner > * {
+        transition: opacity .2s ease, visibility .2s ease;
+
+        &:last-child {
+          @apply opacity-0 invisible;
+        }
+      }
+
+      .no-touch &:focus,
+      .no-touch &:hover {
+        .RoundButton__Inner {
+          > :first-child {
+            @apply opacity-0 invisible;
+          }
+          > :last-child {
+            @apply opacity-100 visible;
+          }
+        }
+      }
+    }
+  }
+
+  &__Bar {
+    @apply invisible;
+    transform: translateY(100%);
+    transition: transform 0.5s cubic-bezier(.75,0,.25,1), visibility 0s 0.5s;
+
+    &::before {
+      content: "";
+      @apply w-full bg-primary opacity-20;
+      height: theme('borderWidth.2');
+    }
+
+    &.is-visible {
+      visibility: visible;
+      transform: none;
+      transition-delay: 0s, 0s;
+    }
+  }
+
+  &__Controls {
+    @apply px-16;
+    width: calc(100% - 2 * theme('padding.container'));
+
+    @screen lg {
+      @apply mx-auto px-0;
+      max-width: 86.75%;
+    }
+  }
+}

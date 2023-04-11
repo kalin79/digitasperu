@@ -1,0 +1,161 @@
+.Button {
+  appearance: none;
+  @apply inline-block align-middle h-40 lg:h-56 px-16 lg:px-24;
+  @apply rounded;
+  color: var(--Button-color, inherit);
+  @apply font-heavy uppercase;
+  @apply cursor-pointer focus:outline-none;
+  transform: translateZ(0); /* create new context */
+
+  &__Inner {
+    @apply grid justify-center items-center h-full;
+    grid-template-columns: repeat(2, auto);
+  }
+
+  &::before,
+  &::after {
+    content: "";
+    @apply absolute -z-1 inset-0 rounded pointer-events-none;
+
+    .no-touch & {
+      transition: opacity .28s ease-out;
+    }
+  }
+  &::before {
+    box-shadow: inset 0 0 0 1px currentColor;
+    outline: 1px solid transparent;
+  }
+  &::after {
+    @apply bg-gradient-to-l from-primary to-secondary;
+    @apply opacity-0;
+  }
+
+  .no-touch &:focus,
+  .no-touch &:hover,
+  .touch &:active {
+    &::before,
+    &::after {
+      transition-delay: .13s;
+    }
+    &::before {
+      @apply opacity-0;
+    }
+    &::after {
+      @apply opacity-100;
+    }
+
+    .Button__Icon {
+      /* filter: invert(1); */
+      @apply text-primary-contrast;
+    }
+
+    .Button__Label:not(.Button__Label--clone) {
+      @apply opacity-0;
+    }
+    .Button__Label--clone {
+      @apply opacity-100;
+    }
+  }
+  .no-touch &:focus,
+  .no-touch &:hover {
+    .Button__Label:not(.Button__Label--clone) {
+      transform: translateY(-1rem);
+    }
+    .Button__Label--clone {
+      transform: none;
+    }
+  }
+
+  &--small {
+    @apply lg:h-40;
+  }
+
+  &--solid {
+    &::after {
+      @apply bg-none bg-current;
+    }
+
+    .Button__Icon {
+      @apply text-current;
+
+      .no-touch & {
+        transition: filter .3s ease;
+      }
+    }
+
+    .Button__Label--clone {
+      @apply text-current;
+      filter: invert(var(--invert, 1));
+    }
+
+    .no-touch &:focus,
+    .no-touch &:hover,
+    .touch &:active {
+      .Button__Icon {
+        @apply text-current;
+        filter: invert(1);
+      }
+    }
+  }
+
+  &--link {
+    @apply h-auto lg:h-auto px-0 lg:px-0;
+
+    &::before,
+    &::after {
+      @apply hidden bg-none;
+    }
+
+    .Button__Label--clone {
+      @apply text-current;
+      /* filter: none; */
+    }
+
+    .no-touch &:focus,
+    .no-touch &:hover,
+    .touch &:active {
+      .Button__Icon {
+        @apply text-current;
+        filter: none;
+      }
+    }
+  }
+
+  &__Icon {
+    @apply row-start-1 col-start-1 mr-8;
+
+    .no-touch & {
+      /* transition: filter .3s ease; */
+      transition: color .3s ease;
+    }
+
+    &.Icon--arrow-small {
+      font-size: .75rem;
+    }
+  }
+
+  &__Label {
+    @apply row-start-1 col-start-2 inline-block;
+
+    .no-touch & {
+      transition: transform .21s cubic-bezier(.76,0,.24,1), opacity .21s cubic-bezier(.76,0,.24,1);
+    }
+
+    @plumber {
+      font-size: 1.375; /* 11px / 8 */
+      line-height: 2;
+      leading-top: 1;
+    }
+
+    &--clone {
+      @apply text-left text-primary-contrast select-none pointer-events-none opacity-0;
+      /* filter: invert(var(--invert, 1)); */
+
+      .no-touch & {
+        @apply col-span-full;
+        transform: translateY(1rem);
+        transition: transform .3s ease, opacity .3s ease;
+      }
+    }
+  }
+}

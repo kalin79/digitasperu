@@ -1,0 +1,19 @@
+{% embed '@Components/Hero/Hero.twig' with { class: 'HeroNews bg-global text-black' } %}
+  {% block content %}
+    <div class="row-start-2">
+      <h1 class="HeroNews__Title title-large lg:max-w-9/12" x-appear:title="$store.app.isReady">{{ title }}</h1>
+    </div>
+
+    <div class="row-start-3 col-span-default lg:col-start-2 lg:col-span-2 mt-32 lg:mt-20">
+      <span class="cap-title-small-italic">{{ 'Published %s'|format(date|date('F j, Y')) }}</span>
+    </div>
+
+    <div class="row-start-3 lg:row-start-1 col-start-11 col-span-2 lg:col-auto absolute top-0 right-0 mt-24 lg:-mt-8 px-24 lg:px-56 pointer-events-none">
+      <div class="flex justify-end items-center lg:justify-center h-40 lg:w-40">
+        {% include '@Components/Share/Share.twig' with { shareText: title, uniqid: 'HeroNews' } only %}
+      </div>
+    </div>
+  {% endblock %}
+{% endembed %}
+
+{% embed '@Components/PageNavbar/PageNavbar.twig' with { shareText: title } only %}{% endembed %}

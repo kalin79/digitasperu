@@ -1,0 +1,62 @@
+.Share {
+  &__Toggler {
+    @apply w-32 h-32;
+
+    .Icon {
+      font-size: 1.5rem;
+    }
+
+    .no-touch &:focus,
+    .no-touch &:hover,
+    .touch &:active,
+    &.active {
+      --RoundButton-bg: currentColor;
+      --RoundButton-color: theme('colors.primary');
+
+      .RoundButton__Inner::before {
+        background-color: var(--RoundButton-bg);
+      }
+
+      .Icon {
+        @apply text-primary-contrast;
+      }
+    }
+  }
+
+  &__Drawer {
+    z-index: calc(theme('zIndex.drawer') + 1);
+  }
+
+  &__Title {
+    @apply font-heavy text-18;
+  }
+
+  &__Items {
+    @apply bg-primary;
+
+    .Icon {
+      font-size: 1.5rem;
+    }
+  }
+
+  &__Action {
+    @apply text-primary-contrast;
+
+    @screen lg {
+      .no-touch &:hover {
+        opacity: 0.5;
+      }
+    }
+  }
+
+  &__CopyConfirmation {
+    @apply text-black lg:text-current;
+  }
+
+  &__CloseButton {
+    --RoundButton-bg: theme('backgroundColor.primary');
+    --RoundButton-color: theme('textColor.primary-contrast');
+    @apply w-80 h-80 -mt-40 lg:-ml-40;
+    font-size: .75rem;
+  }
+}

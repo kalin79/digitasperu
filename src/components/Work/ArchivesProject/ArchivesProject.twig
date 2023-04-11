@@ -1,0 +1,109 @@
+{% set settings = { itemsPerPage: itemsPerPage|default(8) } %}
+
+<div class="ArchivesProject py-global bg-global" x-data="ArchivesProject({{ settings|json_encode|e('html_attr') }})">
+  <div class="ArchivesProject__Header">
+    <div class="container mb-40 lg:mb-56">
+      <div class="ArchivesProject__Heading lg:grid items-center">
+        <h2 class="ArchivesProject__Title lg:max-w-8/12 title-big" x-appear:title>{{ title }}</h2>
+
+        {% if filters %}
+          <button x-ref="top" type="button" class="ArchivesProject__FiltersToggler order-last self-end inline-flex items-center mt-32 lg:mt-0 lg:mb-24 lg:ml-40" x-on:click="openDrawer">
+            <span class="cap-title-small-italic uppercase">Filtros</span>
+            {% include '@Components/Icon/Icon.twig' with { icon: 'filters', class: 'ml-10 text-24', attr: 'aria-hidden="true" focusable="false"' } only %}
+          </button>
+        {% endif %}
+      </div>
+
+      <div class="ArchivesProject__ActiveFilters flex-1 flex flex-row flex-wrap items-start lg:justify-end -ml-8 mt-16 lg:ml-0 lg:-mt-16 space-x-8 space-y-8 lg:space-x-16 lg:space-y-16">
+        <template x-for="filter in activeFilters" x-bind:key="`${filter.taxonomy}-${filter.id}`">
+          {% include '@Components/Chip/Chip.twig' with {
+            label: '<span x-text="filter.title"></span>',
+            tag: 'button',
+            attr: 'type="button" aria-label="Remove filter" x-on:click="clearFilter(filter)"',
+            outline: true,
+            dismiss: true
+          } only %}
+        </template>
+      </div>
+    </div>
+  </div>
+
+  <div class="ArchivesProject__Masonry container">
+    <div x-ref="items" class="ArchivesProject__Grid lg:grid lg:grid-cols-2 lg:gap-x-gutter">
+      {% for entity in items %}
+        {# prepare entity's terms for filters #}
+        {% set terms = [] %}
+        {% for tag in entity.tags %}
+          {% set terms = terms|merge([{ id: tag.id, title: tag.title, taxonomy: 'solution' }]) %}
+        {% endfor %}
+        {% for client in entity.client %}
+          {% set terms = terms|merge([{ id: client.id, title: client.title, taxonomy: 'client' }]) %}
+        {% endfor %}
+        {% include '@Components/CardProject/CardProject.twig' with { class: 'mb-24 lg:mb-56', attr: 'data-id="' ~ loop.index ~ '" data-terms="' ~ terms|json_encode|e('html_attr') ~ '"' }|merge(entity) only %}
+      {% endfor %}
+    </div>
+
+    <div
+      x-ref="grid"
+      class="ArchivesProject__Grid lg:grid lg:grid-cols-2 lg:gap-x-gutter"
+      role="list"
+      aria-live="polite"
+      x-bind="gridProps"
+    >
+      <template x-for="column in items2D">
+        <div class="ArchivesProject__Column" role="none">
+          <template x-for="entity in column">
+            {% include '@Components/CardProject/CardProject.twig' with { alpine: true, class: 'mb-24 lg:mb-56', attr: 'role="listitem" x-bind:aria-setsize="filteredItems.length" x-bind:aria-posinset="entity.index+1"' } only %}
+          </template>
+        </div>
+      </template>
+    </div>
+  </div>
+
+  <div class="ArchivesProject__Footer container pt-40 lg:pt-56">
+    <div class="relative flex justify-center">
+      <div class="flex flex-col lg:flex-row justify-center lg:items-center space-y-16 lg:space-y-0">
+        <template x-if="!isLastPage">
+          {% include '@Components/Button/Button.twig' with {
+            tag: 'button',
+            label: 'See All',
+            icon: 'refresh-small',
+            attr: 'type="button" x-on:click="showAll"'
+          } only %}
+        </template>
+        {% include '@Components/Button/Button.twig' with {
+          tag: 'button',
+          label: 'Back to Projects',
+          class: 'ArchivesProject__BackToTopButton lg:absolute lg:right-0',
+          attr: 'type="button" x-on:click="backToTop"'
+        } only %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% if filters %}
+  {% include '@Components/FiltersDrawer/FiltersDrawer.twig' with filters only %}
+
+  {# {% embed '@Components/PageNavbar/PageNavbar.twig' with {} only %}
+    {% block inner %}
+      <div class="flex-1 flex justify-end space-x-20 bg-global lg:bg-transparent">
+        <div class="flex-1 hidden lg:flex flex-row flex-wrap items-start lg:justify-end -ml-8 mt-16 lg:ml-0 lg:-mt-16 space-x-8 space-y-8 lg:space-x-16 lg:space-y-16">
+          <template x-for="filter in $store.filters.activeFilters" :key="`${filter.taxonomy}-${filter.id}`">
+            {% include '@Components/Chip/Chip.twig' with {
+              label: '<span x-text="filter.title"></span>',
+              tag: 'button',
+              attr: 'type="button" x-on:click="$store.filters.clearFilter(filter)"',
+              outline: true,
+              dismiss: true
+            } only %}
+          </template>
+        </div>
+        <button type="button" class="inline-flex items-center" x-on:click="$store.filters.open()">
+          <span class="cap-title-small-italic uppercase">Filters</span>
+          {% include '@Components/Icon/Icon.twig' with { icon: 'filters', class: 'ml-10 text-24', attr: 'aria-hidden="true" focusable="false"' } only %}
+        </button>
+      </div>
+    {% endblock %}
+  {% endembed %} #}
+{% endif %}

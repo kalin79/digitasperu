@@ -1,0 +1,18 @@
+.PageNavbar {
+  transform: translate3d(0,-100%,0);
+  transition: transform 1s cubic-bezier(.14,1,.34,1);
+  will-change: transform;
+
+  &.is-visible {
+    transform: none;
+  }
+
+  &__Inner {
+    /* transform: translate3d(0,calc(min(0, var(--scroll-direction, 1)) * -100%),0);
+    transition: transform .15s ease-in-out, opacity .15s ease-in-out;
+
+    @screen lg {
+      opacity: calc(max(0, var(--scroll-direction, 1)));
+    } */
+  }
+}

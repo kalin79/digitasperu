@@ -1,0 +1,35 @@
+.CardEntity {
+  &__Thumbnail {
+    @apply grid overflow-hidden;
+
+    &::before {
+      content: "";
+      display: block;
+      padding-top: calc(var(--aspect-ratio) * 100%);
+    }
+
+    &::before,
+    & > * {
+      @apply row-start-1 col-start-1;
+    }
+
+    img {
+      transition: transform 1s;
+    }
+  }
+  &:hover &__Thumbnail img {
+    transform: scale(1.05);
+  }
+
+  &__Metas {
+    @apply opacity-0 invisible;
+    transition: opacity .3s ease, visibility .3s ease;
+  }
+  &:hover &__Metas {
+    @apply opacity-100 visible;
+  }
+
+  &__Title {
+    max-width: 15em;
+  }
+}

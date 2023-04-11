@@ -1,0 +1,35 @@
+<div class="PlayerControls {{ class }}" x-bind:class="uiClasses" {{ attr }}>
+  <button
+    type="button"
+    class="PlayerControls__Button PlayerControls__Button--play"
+    aria-label="Toggle play"
+    x-on:click="togglePlay"
+  >
+    {% include '@Components/Icon/Icon.twig' with { icon: 'play-outline', attr: 'x-show="paused" aria-hidden="true" focusable="true"' } only %}
+    {% include '@Components/Icon/Icon.twig' with { icon: 'pause', attr: 'x-show="!paused" aria-hidden="true" focusable="true"' } only %}
+  </button>
+
+  <div class="flex-1 flex space-x-16">
+    <div class="PlayerControls__Text PlayerControls__Text--currentTime" x-text="readableCurrentTime"></div>
+    <div class="PlayerControls__SeekBar"
+      x-ref="seekbar"
+      x-on:pointerdown="onSeekPtrDown"
+      x-on:pointermove="onSeekPtrMove"
+    >
+      <div class="PlayerControls__SeekBar__Background">
+        <div x-ref="seekbarinner" class="PlayerControls__SeekBar__Inner"></div>
+      </div>
+    </div>
+    <div class="PlayerControls__Text PlayerControls__Text--duration" x-text="readableDuration"></div>
+  </div>
+
+  <button
+    type="button"
+    class="PlayerControls__Button PlayerControls__Button--volume"
+    aria-label="Toggle volume"
+    x-on:click="toggleVolume"
+  >
+    {% include '@Components/Icon/Icon.twig' with { icon: 'volume-off', attr: 'x-show="muted" aria-hidden="true" focusable="true"' } only %}
+    {% include '@Components/Icon/Icon.twig' with { icon: 'volume-up', attr: 'x-show="!muted" aria-hidden="true" focusable="true"' } only %}
+  </button>
+</div>

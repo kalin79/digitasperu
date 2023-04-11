@@ -1,0 +1,9 @@
+.CardEntity--project {
+  .CardEntity__Thumbnail {
+    --aspect-ratio: 504/644;
+  }
+
+  .CardEntity__Text {
+    margin-top: .125rem;
+  }
+}

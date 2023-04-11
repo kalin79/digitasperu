@@ -1,0 +1,125 @@
+{% set settings = { itemsPerPage: itemsPerPage|default(9) } %}
+
+<div class="ArchivesInsight pb-global bg-global" x-data="ArchivesInsight({{ settings|json_encode|e('html_attr') }})">
+  <div class="ArchivesInsight__Header -mb-128 lg:-mb-256 pt-80 pb-128 lg:pt-224 lg:pb-256 bg-black">
+    <div class="container filter invert mb-40 lg:mb-56">
+      <div class="ArchivesInsight__Heading lg:grid items-center is-split" x-appear:title>
+        <h2 class="lg:contents lg:whitespace-nowrap">
+          {% for line in title %}
+            <span class="ArchivesInsight__Title title-big">
+              <span class="Line__Wrapper">
+                <span class="Line">
+                  {{- line -}}
+                </span>
+              </span>
+            </span>
+          {% endfor %}
+        </h2>
+        <div class="ArchivesInsight__Subheading subheading-small mt-32 lg:mt-0">
+          {{- subheading -}}
+        </div>
+
+        {% if filters %}
+          <button x-ref="top" type="button" class="ArchivesInsight__FiltersToggler order-last self-end inline-flex items-center mt-32 lg:mt-0 lg:mb-24 lg:ml-40" x-on:click="openDrawer">
+            <span class="cap-title-small-italic uppercase">Filters</span>
+            {% include '@Components/Icon/Icon.twig' with { icon: 'filters', class: 'ml-10 text-24', attr: 'aria-hidden="true" focusable="false"' } only %}
+          </button>
+        {% endif %}
+      </div>
+
+      <div class="ArchivesInsight__ActiveFilters flex-1 flex flex-row flex-wrap items-start lg:justify-end -ml-8 mt-16 lg:ml-0 lg:-mt-16 space-x-8 space-y-8 lg:space-x-16 lg:space-y-16">
+        <template x-for="filter in activeFilters" :key="`${filter.taxonomy}-${filter.id}`">
+          {% include '@Components/Chip/Chip.twig' with {
+            label: '<span x-text="filter.title"></span>',
+            tag: 'button',
+            attr: 'type="button" aria-label="Remove filter" x-on:click="clearFilter(filter)"',
+            outline: true,
+            dismiss: true
+          } only %}
+        </template>
+      </div>
+    </div>
+  </div>
+
+  <div class="ArchivesInsight__Masonry container">
+    <div x-ref="items" class="ArchivesInsight__Grid lg:grid lg:grid-cols-3 lg:gap-x-gutter">
+      {% for entity in items %}
+        {# prepare entity's terms for filters #}
+        {% set terms = [] %}
+        {% for term in entity.authors %}
+          {% set terms = terms|merge([{ id: term.id, title: term.name, taxonomy: 'author' }]) %}
+        {% endfor %}
+        {% for term in entity.categories %}
+          {% set terms = terms|merge([{ id: term.id, title: term.title, taxonomy: 'solution' }]) %}
+        {% endfor %}
+        {% for term in entity.topics %}
+          {% set terms = terms|merge([{ id: term.id, title: term.title, taxonomy: 'topic' }]) %}
+        {% endfor %}
+        {% include '@Components/CardInsight/CardInsight.twig' with { class: 'mb-40 lg:mb-72', attr: 'data-id="' ~ loop.index ~ '" data-terms="' ~ terms|json_encode|e('html_attr') ~ '"' }|merge(entity) only %}
+      {% endfor %}
+    </div>
+
+    <div
+      x-ref="grid"
+      class="ArchivesInsight__Grid lg:grid lg:grid-cols-3 lg:gap-x-gutter"
+      role="list"
+      aria-live="polite"
+      x-bind="gridProps"
+    >
+      <template x-for="column in items2D">
+        <div class="ArchivesInsight__Column" role="none">
+          <template x-for="entity in column">
+            {% include '@Components/CardInsight/CardInsight.twig' with { alpine: true, class: 'mb-40 lg:mb-72', attr: 'role="listitem" x-bind:aria-setsize="filteredItems.length" x-bind:aria-posinset="entity.index+1"' } only %}
+          </template>
+        </div>
+      </template>
+    </div>
+  </div>
+
+  <div class="ArchivesInsight__Footer container pt-40 lg:pt-56">
+    <div class="relative flex justify-center">
+      <div class="flex flex-col lg:flex-row justify-center lg:items-center space-y-16 lg:space-y-0">
+        <template x-if="!isLastPage">
+          {% include '@Components/Button/Button.twig' with {
+            tag: 'button',
+            label: 'More Insights',
+            icon: 'refresh-small',
+            attr: 'type="button" x-on:click="nextPage"'
+          } only %}
+        </template>
+        {% include '@Components/Button/Button.twig' with {
+          tag: 'button',
+          label: 'Back to Insights',
+          class: 'ArchivesInsight__BackToTopButton lg:absolute lg:right-0',
+          attr: 'type="button" x-on:click="backToTop"'
+        } only %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% if filters %}
+  {% include '@Components/FiltersDrawer/FiltersDrawer.twig' with filters only %}
+
+  {# {% embed '@Components/PageNavbar/PageNavbar.twig' with {} only %}
+    {% block inner %}
+      <div class="flex-1 flex justify-end space-x-20 bg-global lg:bg-transparent">
+        <div class="flex-1 hidden lg:flex flex-row flex-wrap items-start lg:justify-end -ml-8 mt-16 lg:ml-0 lg:-mt-16 space-x-8 space-y-8 lg:space-x-16 lg:space-y-16">
+          <template x-for="filter in $store.filters.activeFilters" :key="`${filter.taxonomy}-${filter.id}`">
+            {% include '@Components/Chip/Chip.twig' with {
+              label: '<span x-text="filter.title"></span>',
+              tag: 'button',
+              attr: 'type="button" x-on:click="$store.filters.clearFilter(filter)"',
+              outline: true,
+              dismiss: true
+            } only %}
+          </template>
+        </div>
+        <button type="button" class="inline-flex items-center" x-on:click="$store.filters.open()">
+          <span class="cap-title-small-italic uppercase">Filters</span>
+          {% include '@Components/Icon/Icon.twig' with { icon: 'filters', class: 'ml-10 text-24', attr: 'aria-hidden="true" focusable="false"' } only %}
+        </button>
+      </div>
+    {% endblock %}
+  {% endembed %} #}
+{% endif %}

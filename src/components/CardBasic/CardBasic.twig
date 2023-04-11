@@ -1,0 +1,19 @@
+<article class="CardEntity CardEntity--basic {{ class }}" {{ attr }} x-cursor:label="view">
+  <div class="CardEntity__Thumbnail relative bg-placeholder" x-appear:image>
+    {% if thumbnail %}
+      {% include '@Components/Image/Image.twig' with {class: 'object-cover w-full h-full absolute'}|merge(thumbnail) only %}
+    {% endif %}
+  </div>
+  <div class="CardEntity__Body pt-16">
+    {% if tag %}
+      <div class="CardEntity__Eyebrow eyebrow mb-16">{{ tag }}</div>
+    {% endif %}
+    <div class="CardEntity__Title title-small">
+      {%- if link -%}
+        <a href="{{ link }}" class="stretched-link">{{ title }}</a>
+      {%- else -%}
+        {{- title -}}
+      {%- endif -%}
+    </div>
+  </div>
+</article>

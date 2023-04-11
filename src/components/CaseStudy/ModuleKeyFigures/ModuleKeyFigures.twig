@@ -1,0 +1,29 @@
+<div
+  class="ModuleKeyFigures CaseModule container{% if background == 'primary' %} bg-primary text-primary-contrast{% elseif background == 'muted' %} bg-muted{% endif %}"
+  x-data="CaseModule"
+  x-bind="$listeners"
+>
+  {% if eyebrow %}
+    <div class="ModuleKeyFigures__Eyebrow eyebrow mb-8 lg:mb-32">{{ eyebrow }}</div>
+  {% endif %}
+
+  <ul class="ModuleKeyFigures__List space-y-16 lg:space-y-0 divide-y divide-black divide-opacity-30">
+    {% for item in items %}
+      <li class="ModuleKeyFigures__Item pt-32 lg:pb-32">
+        <div class="KeyFigure lg:grid grid-cols-2 gap-x-gutter items-center">
+          <div class="KeyFigure__Header mb-12 lg:mb-0">
+            {% if item.icon %}
+              <div class="KeyFigure__Icon">{{ item.icon }}</div>
+            {% endif %}
+            <div class="KeyFigure__Title title-big leading-none" x-appear:title>{{ item.title }}</div>
+          </div>
+          <div class="KeyFigure__Body">
+            <div class="KeyFigure__Content lg:max-w-4/12">
+              {{- item.content -}}
+            </div>
+          </div>
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+</div>

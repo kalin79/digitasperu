@@ -1,0 +1,28 @@
+.ModulePlace {
+  &__Heading {
+    @screen lg {
+      grid-template-columns: minmax(16rem, auto) max-content;
+
+      &[x-appear\:title].is-split {
+        @apply grid;
+      }
+    }
+  }
+
+  &__Title {
+    @screen lg {
+      @apply col-span-full;
+
+      &:last-of-type {
+        @apply col-span-1 order-last;
+      }
+    }
+  }
+
+  &__Content {
+    ul {
+      @apply space-y-16 lg:space-y-32;
+      max-width: calc(26em + 2em);
+    }
+  }
+}

@@ -1,0 +1,15 @@
+<header
+  class="Hero flex relative {{ class }}"
+  x-data="Hero"
+  {{ attr }}
+>
+  {% block inner %}
+    <div class="Hero__Content container">
+      {% block content %}{% endblock %}
+    </div>
+
+    <figure class="Hero__Background absolute inset-0 -z-1">
+      {% block background %}{% endblock %}
+    </figure>
+  {% endblock inner %}
+</header>

@@ -1,0 +1,8 @@
+@layer utilities {
+  @responsive {
+    .writing-vertical-upwards {
+      writing-mode: vertical-lr;
+      transform: rotate(180deg);
+    }
+  }
+}

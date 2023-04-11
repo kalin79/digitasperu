@@ -1,0 +1,58 @@
+{% set rows = { 'row1': [], 'row2': [] } %}
+{% for i in 0..(members.length - 1) %}
+  {% set row = 'row' ~ (i % 2 or loop.revindex0 < 2 ? 2 : 1) %}
+  {% set rows = rows|merge({ (row): rows[row]|merge([members[i]]) }) %}
+{% endfor %}
+
+<div class="Leadership container py-120 lg:py-240 overflow-hidden relative bg-black text-white" x-data>
+  {% if title %}
+    <div class="mb-32 lg:mb-56 title-big text-center" x-appear:title>{{ title }}</div>
+  {% endif %}
+
+  {% embed '@Components/Slider/Slider.twig' with {
+    class: 'Leadership__Slider',
+    settings: { snapWithKeyboard: false }
+  } %}
+    {% block slides %}
+
+      {% set panelIdx = 0 %}
+      {% for row in rows %}
+
+        {% set odd = loop.index % 2 == 0  %}
+        <div class="Leadership__Slides Slider__Slides grid grid-flow-col gap-x-gutter">
+
+          {% set marginOffset = 0 %}
+          {% if odd %}
+            {% set marginOffset = 1 %}
+            <div class="w-col-2/12 lg:w-col-1/12"></div>
+          {% endif %}
+
+          {% for member in row %}
+            {% if (loop.index0 - (marginOffset)) % 3 == 0 and not loop.first %}
+              {% set panel = panels[panelIdx % panels.length] %}
+              <div class="Leadership__Slide Slider__Slide">
+                <div class="CardEntity CardEntity--member relative">
+                  <div class="CardEntity__Thumbnail" x-appear>
+                    <div class="flex flex-col justify-between items-start p-16 bg-primary text-primary-contrast"{% if panel.color %} style="--primary-color:{{ panel.color }};{% if panel.contrastColor %}--primary-contrast-color:{{ panel.contrastColor }}{% endif %}"{% endif %}>
+                      {% include '@Components/Icon/Icon.twig' with { icon: 'logo-unicorn', attr: 'aria-hidden="true" focusable="false"' } only %}
+                      <span class="title-small">{{ panel.title }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% set panelIdx = panelIdx + 1 %}
+            {% endif %}
+
+            <div class="Leadership__Slide Slider__Slide">
+              {% include '@Components/CardMember/CardMember.twig' with member only %}
+            </div>
+          {% endfor %}
+
+        </div>
+        {% set panelIdx = panelIdx + 1 %}
+      {% endfor %}
+
+    {% endblock %}
+  {% endembed %}
+
+</div>

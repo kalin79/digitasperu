@@ -1,0 +1,89 @@
+/* @font-face {
+  font-family: "Avenir LT Std";
+  src: local('Avenir LT Std 35 Light'),
+       url('~@/assets/fonts/AvenirLTStd-Light.woff2') format('woff2'),
+       url('~@/assets/fonts/AvenirLTStd-Light.woff') format('woff');
+  font-weight: theme('fontWeight.light');
+  font-style: normal;
+  font-display: swap;
+} */
+
+@font-face {
+  font-family: "Avenir LT Std";
+  src: local('Avenir LT Std 45 Book'),
+       url('~@/assets/fonts/AvenirLTStd-Book.woff2') format('woff2'),
+       url('~@/assets/fonts/AvenirLTStd-Book.woff') format('woff');
+  font-weight: theme('fontWeight.book');
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Avenir LT Std";
+  src: local('Avenir LT Std 45 Book Oblique'),
+       url('~@/assets/fonts/AvenirLTStd-BookOblique.woff2') format('woff2'),
+       url('~@/assets/fonts/AvenirLTStd-BookOblique.woff') format('woff');
+  font-weight: theme('fontWeight.book');
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Avenir LT Std";
+  src: local('Avenir LT Std 55 Roman'),
+       url('~@/assets/fonts/AvenirLTStd-Roman.woff2') format('woff2'),
+       url('~@/assets/fonts/AvenirLTStd-Roman.woff') format('woff');
+  font-weight: theme('fontWeight.roman');
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Avenir LT Std";
+  src: local('Avenir LT Std 55 Oblique'),
+       url('~@/assets/fonts/AvenirLTStd-Oblique.woff2') format('woff2'),
+       url('~@/assets/fonts/AvenirLTStd-Oblique.woff') format('woff');
+  font-weight: theme('fontWeight.roman');
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Avenir LT Std";
+  src: local('Avenir LT Std 65 Medium'),
+       url('~@/assets/fonts/AvenirLTStd-Medium.woff2') format('woff2'),
+       url('~@/assets/fonts/AvenirLTStd-Medium.woff') format('woff');
+  font-weight: theme('fontWeight.medium');
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Avenir LT Std";
+  src: local('Avenir LT Std 85 Heavy'),
+       url('~@/assets/fonts/AvenirLTStd-Heavy.woff2') format('woff2'),
+       url('~@/assets/fonts/AvenirLTStd-Heavy.woff') format('woff');
+  font-weight: theme('fontWeight.heavy');
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Avenir LT Std";
+  src: local('Avenir LT Std 95 Black'),
+       url('~@/assets/fonts/AvenirLTStd-Black.woff2') format('woff2'),
+       url('~@/assets/fonts/AvenirLTStd-Black.woff') format('woff');
+  font-weight: theme('fontWeight.black');
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Avenir LT Std";
+  src: local('Avenir LT Std 95 Black Oblique'),
+       url('~@/assets/fonts/AvenirLTStd-BlackOblique.woff2') format('woff2'),
+       url('~@/assets/fonts/AvenirLTStd-BlackOblique.woff') format('woff');
+  font-weight: theme('fontWeight.black');
+  font-style: italic;
+  font-display: swap;
+}

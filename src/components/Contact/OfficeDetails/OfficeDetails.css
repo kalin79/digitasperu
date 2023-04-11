@@ -1,0 +1,17 @@
+.OfficeDetails {
+  &__Image {
+    @screen lg {
+      margin-bottom: calc(-168 / 512 * 100%);
+    }
+  }
+
+  &__Map {
+    @apply h-screen;
+    max-height: 37.5rem; /* 600px */
+    background-color: #cdcdcd;
+
+    @screen lg {
+      height: calc(6 / 16 * (100 * var(--vw, 1vw)));
+    }
+  }
+}

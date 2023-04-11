@@ -1,0 +1,11 @@
+.CardEntity--member {
+  width: 13.4375rem; /* 215px */
+
+  @screen lg {
+    width: 14.0625rem; /* 225px */
+  }
+
+  .CardEntity__Thumbnail {
+    --aspect-ratio: 320/225;
+  }
+}

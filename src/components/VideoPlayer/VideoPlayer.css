@@ -1,0 +1,39 @@
+.VideoPlayer {
+  @apply relative;
+
+  .MagneticCursor {
+    --parent-width: calc(10 * var(--container-column-width) + 9 * var(--container-gutter-width));
+    --cursor-x: calc(var(--parent-width) / 2);
+    --cursor-y: calc((var(--parent-width) * 0.5625) / 2);
+    @apply absolute;
+  }
+}
+
+.VideoPlayer__UI {
+  @apply absolute inset-x-0 bottom-0 flex justify-center p-24 pointer-events-none;
+  transform: translate3d(0,100%,0);
+  transition: transform 0.5s cubic-bezier(.75,0,.25,1);
+
+  &.is-visible {
+    transform: none;
+  }
+}
+
+
+.VideoPlayer__Cursor{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  @apply cursor-pointer;
+}
+
+/*
+=== CONTROLS
+*/
+.VideoPlayer__Controls {
+  @apply w-full h-48 px-16;
+  @apply rounded bg-white;
+  max-width: 42.5rem; /* 680px */
+}

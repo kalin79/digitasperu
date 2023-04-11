@@ -1,0 +1,15 @@
+<div class="RelatedNews container py-96 lg:pt-224 lg:pb-96 bg-muted" role="complementary" x-data>
+  {% if title %}
+    <div class="col-span-default lg:col-start-2 lg:col-span-5 flex justify-between items-baseline">
+      <div class="title-big" x-appear:title>{{ title }}</div>
+    </div>
+  {% endif %}
+
+  <div class="col-span-default lg:col-start-7 lg:col-span-5 lg:-mt-24">
+    {% for item in news %}
+      <div class="RelatedNews__Item lg:max-w-5/12 lg:mb-20 py-40 border-b border-gray-200">
+        {% include '@Components/CardNews/CardNews.twig' with item only %}
+      </div>
+    {% endfor %}
+  </div>
+</div>

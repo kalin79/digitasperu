@@ -1,0 +1,9 @@
+.Accordions {
+  &__Item {
+    [aria-expanded="true"] {
+      .Icon {
+        transform: rotate(45deg);
+      }
+    }
+  }
+}

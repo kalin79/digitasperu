@@ -1,0 +1,33 @@
+<div class="Awards container py-56 lg:pt-0 lg:pb-240 bg-muted">
+  <div class="row-start-1 col-start-5 col-span-7 lg:col-span-default eyebrow mb-24 lg:mb-40 pt-8 lg:pt-240">
+    {{- eyebrow -}}
+  </div>
+  <div class="row-start-1 row-span-2 lg:row-start-2 lg:row-span-1 col-start-2 col-span-3 lg:col-start-2 lg:col-span-2">
+    <div class="Awards__Title sticky top-56 lg:top-scroll-padding writing-vertical-upwards">{{ title }}</div>
+  </div>
+  <div class="row-start-2 col-start-5 col-span-7 lg:col-start-4 lg:col-span-3">
+    <div class="lg:max-w-3/12 m-paragraph lg:paragraph mb-56">
+      {{- description -}}
+    </div>
+  </div>
+  <div class="Awards__Container lg:row-start-1 lg:row-span-3 col-span-full container -mt-16 lg:mt-0 pb-56 lg:pt-240 lg:pb-0 overflow-hidden">
+    <div class="col-span-full lg:col-start-4 lg:col-span-8 flex justify-center">
+      {% if awards %}
+        <ul class="Awards__List">
+          {% for award in awards %}
+            <li class="Awards__Item">
+              <div class="Award__Container">
+                <div class="aspect-w-1 aspect-h-1">
+                  <div class="Award px-32 text-center bg-white rounded-full overflow-hidden">
+                    {% include '@Components/Image/Image.twig' with award.logo|merge({ class: 'Award__Logo' }) only %}
+                    <span class="Award__Description">{{ award.description }}</span>
+                  </div>
+                </div>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+  </div>
+</div>

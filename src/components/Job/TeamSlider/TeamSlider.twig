@@ -1,0 +1,20 @@
+<div class="TeamSlider container py-global overflow-hidden bg-muted" x-data>
+  {% if title %}
+    <div class="TeamSlider__Title lg:max-w-9/12 mb-24 lg:mb-40 title-big" x-appear:title>{{ title }}</div>
+  {% endif %}
+
+  {% embed '@Components/Slider/Slider.twig' with {
+    class: 'TeamSlider__Slider col-span-default lg:col-start-4 lg:col-span-8 mb-32 lg:mb-56',
+    settings: { snapWithKeyboard: false }
+  } %}
+    {% block slides %}
+      <div class="TeamSlider__Slides Slider__Slides grid grid-flow-col gap-x-gutter">
+        {% for member in members %}
+          <div class="TeamSlider__Slide Slider__Slide">
+            {% include '@Components/CardMember/CardMember.twig' with member %}
+          </div>
+        {% endfor %}
+      </div>
+    {% endblock %}
+  {% endembed %}
+</div>

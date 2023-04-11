@@ -1,0 +1,50 @@
+.HeroJob {
+  .Hero__Content {
+    @apply relative lg:content-end py-64 lg:py-88 filter-none;
+    grid-template-rows: 1fr auto 1fr auto;
+
+    @screen lg {
+      grid-template-rows: auto;
+    }
+  }
+
+  &__Title {
+    @screen lg {
+      --line-height: calc(120 / 128);
+      min-height: calc((240 + 88) / 1600 * (100 * var(--vw, 1vw)));
+    }
+  }
+
+  .Share {
+    &__Toggler {
+      .no-touch &:hover,
+      .no-touch &:focus,
+      &.active {
+        --RoundButton-bg: currentColor;
+        --RoundButton-color: currentColor;
+
+        .RoundButton__Inner::before {
+          background-color: var(--RoundButton-bg);
+        }
+
+        .Icon {
+          @apply filter invert;
+        }
+      }
+    }
+
+    &__Items {
+      @apply lg:bg-current;
+    }
+
+    &__Action {
+      @screen lg {
+        @apply filter invert;
+
+        .no-touch &:hover {
+          @apply invert-0 text-primary opacity-100;
+        }
+      }
+    }
+  }
+}

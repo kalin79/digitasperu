@@ -1,0 +1,58 @@
+.UsOffices {
+  &__ItemTitle {
+    @apply inline-grid;
+    margin: -.25em;
+
+    &::before {
+      content: attr(data-title);
+      @apply opacity-0 pointer-events-none;
+      @apply bg-gradient-to-l from-primary to-secondary;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    > *,
+    &::before {
+      @apply row-start-1 col-start-1;
+      padding: .25em;
+
+      @screen lg {
+        transition: opacity .2s ease;
+      }
+    }
+
+    @screen lg {
+      .no-touch .UsOffices__Item:focus,
+      .no-touch .UsOffices__Item:hover & {
+        > * {
+          @apply opacity-0;
+        }
+        &::before {
+          @apply opacity-100;
+        }
+      }
+    }
+
+    .UsOffices__ItemTrigger[aria-expanded="true"] & {
+      > * {
+        @apply opacity-0;
+      }
+      &::before {
+        @apply opacity-100;
+      }
+    }
+  }
+
+  &__ItemImage {
+    @screen lg {
+      @apply opacity-0 invisible;
+      transform: translateY(-50%) scale(0.95);
+      transition: .2s ease;
+
+      .no-touch .UsOffices__ItemTrigger:hover + .UsOffices__ItemBody & {
+        @apply opacity-100 visible;
+        transform: translateY(-50%);
+      }
+    }
+  }
+}

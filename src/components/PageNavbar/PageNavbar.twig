@@ -1,0 +1,19 @@
+<div
+  x-data="PageNavbar"
+  class="PageNavbar fixed z-header top-0 inset-x-0 pointer-events-none"
+  x-bind:class="{ 'is-visible': isVisible, 'overflow-hidden': !allowOverflow }"
+  x-bind="$listeners"
+>
+  <div x-ref="inner" class="PageNavbar__Inner flex justify-end items-center h-64 lg:h-72 mr-20 pl-24 pr-48 lg:mr-0 lg:px-56">
+    <img class="max-w-none invisible mr-24 lg:mr-40" src="/assets/svg/logo-digitas.svg" alt="Digitas" width="91" height="13">
+
+    {% block inner %}
+      {% include '@Components/Share/Share.twig' with {
+        shareText: shareText,
+        class: 'hidden lg:block',
+        uniqid: 'PageNavbar',
+        buttonAttr: 'tabindex="-1"'
+      } only %}
+    {% endblock %}
+  </div>
+</div>

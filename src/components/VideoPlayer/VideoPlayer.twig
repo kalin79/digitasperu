@@ -1,0 +1,31 @@
+<div
+  class="VideoPlayer {{ class }}"
+  x-data="VideoPlayer"
+  x-bind="$listeners"
+  tabindex="0"
+  x-on:keydown.enter="!isPlayerVisible && showAndPlay()"
+  x-on:keydown.space.prevent="isPlayerVisible && togglePlay()"
+>
+  {% include '@Components/Video/Video.twig' with { poster: poster.src, attr: 'x-bind="playerProps" x-on:ended="hide"' } %}
+
+  <div x-cloak class="absolute inset-0 overflow-hidden pointer-events-none">
+    <div class="VideoPlayer__UI" x-bind:class="{ 'is-visible': isUIVisible, 'invisible': !isPlayerVisible }" x-bind="playerUI">
+      {% include '@Components/PlayerControls/PlayerControls.twig' with { class: 'VideoPlayer__Controls' } only %}
+    </div>
+  </div>
+
+  <div
+    x-show="!isPlayerVisible"
+    class="VideoPlayer__Cursor bg-placeholder"
+    role="button"
+    aria-label="Show and play video"
+    x-appear:image
+    x-on:click="showAndPlay"
+    x-on:mouseenter="$dispatch('magnetic-cursor:enter')"
+    x-on:mouseleave="$dispatch('magnetic-cursor:leave')"
+  >
+    {% include '@Components/Image/Image.twig' with poster only %}
+    {% include '@Components/MagneticCursor/MagneticCursor.twig' with { settings: { icon: 'play' } } only %}
+  </div>
+
+</div>

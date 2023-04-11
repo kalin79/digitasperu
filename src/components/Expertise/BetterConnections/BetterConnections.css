@@ -1,0 +1,54 @@
+.BetterConnections {
+  &__ProjectImage {
+    @screen lg {
+      @apply opacity-0 invisible;
+      transform: scale(0.95);
+      transition: .2s ease;
+
+      .BetterConnections__Project:hover & {
+        @apply opacity-100 visible;
+        transform: none;
+      }
+    }
+  }
+
+  &__TagDetail {
+    @screen lg {
+      @apply grid;
+      grid-template-areas: "pane";
+    }
+  }
+
+  &__TagPane {
+    @apply hidden opacity-0 invisible;
+    transition: .3s ease;
+
+    @screen lg {
+      @apply block;
+      grid-area: pane;
+    }
+
+    &.is-active {
+      @apply block opacity-100 visible;
+    }
+  }
+}
+
+.BetterConnections__TagButton {
+  @apply border-b border-transparent;
+
+  &.is-active{
+    @apply border-current;
+  }
+}
+
+.BetterConnections__TagTitle {
+  @apply text-black text-opacity-20;
+
+  .SliderNotched--BetterConnections .SliderNotched__Slide.is-active & {
+    @apply -m-4 p-4;
+    @apply bg-gradient-to-l from-primary to-secondary;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}

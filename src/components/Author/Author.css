@@ -1,0 +1,20 @@
+.Author {
+  @apply grid items-center;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: "avatar name"
+                       "avatar title";
+
+  &__Avatar {
+    grid-area: avatar;
+  }
+
+  &__Name {
+    @apply self-end;
+    grid-area: name;
+  }
+
+  &__Title {
+    @apply self-start;
+    grid-area: title;
+  }
+}

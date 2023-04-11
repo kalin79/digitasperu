@@ -1,0 +1,59 @@
+<div class="UsOffices container py-48 lg:py-120 bg-global" x-data="Accordions">
+  <div class="mb-16 lg:mb-24 eyebrow">{{ title }}</div>
+
+  <div class="mb-56 lg:mb-120">
+    {% for office in offices %}
+      {% set id = 'UsOffices' ~ loop.index %}
+      <div class="UsOffices__Item Accordions__Item flex flex-col lg:flex-row lg:items-center border-b border-gray-200">
+        <div
+          class="UsOffices__ItemTrigger flex justify-between items-center flex-1 py-32 lg:py-40"
+          x-bind:aria-expanded="isActive({{ loop.index0 }})"
+          aria-controls="{{ id ~ 'Body' }}"
+          id="{{ id }}"
+          x-on:click="toggleItem({{ loop.index0 }})"
+        >
+          <span class="flex-1">
+            {# {% if office.link %} #}
+            {% if false %}
+              <a href="{{ office.link }}" class="UsOffices__ItemTitle title-big pointer-events-none" data-title="{{ office.title|e('html_attr') }}">
+                <span>{{ office.title }}</span>
+              </a>
+            {% else %}
+              <span class="UsOffices__ItemTitle title-big pointer-events-none" data-title="{{ office.title|e('html_attr') }}">
+                <span>{{ office.title }}</span>
+              </span>
+            {% endif %}
+          </span>
+          <span class="lg:hidden">
+            {% include '@Components/Icon/Icon.twig' with { icon: 'plus' } only %}
+          </span>
+        </div>
+        <div
+          x-bind:class="{ 'hidden': !isActive({{ loop.index0 }}) }"
+          class="UsOffices__ItemBody lg:flex w-full lg:w-col-2/12 -mt-8 lg:mt-0 pb-40 lg:py-40"
+          role="region"
+          aria-labelledby="{{ id }}"
+          id="{{ id ~ 'Body' }}"
+        >
+          <div class="lg:fixed lg:z-cursor lg:top-0 lg:left-48 w-full lg:max-w-3/12 mb-24 pointer-events-none" x-mouse-driven="$isDesktop">
+            <figure class="UsOffices__ItemImage bg-placeholder">
+              {% include '@Components/Image/Image.twig' with office.image only %}
+            </figure>
+          </div>
+          <div>
+            {{ office.address }}
+            {% if office.phone %}
+              <br>{{ office.phone }}
+            {% endif %}
+          </div>
+          {# <div class="lg:hidden mt-24">
+            {% include '@Components/Button/Button.twig' with {
+              label: 'Check out our office',
+              link: office.link
+            } only %}
+          </div> #}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>

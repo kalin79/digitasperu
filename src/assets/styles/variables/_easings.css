@@ -1,0 +1,48 @@
+/* Cubic */
+$easeInCubic: cubic-bezier(0.40, 0.00, 0.68, 0.06);
+$easeOutCubic: cubic-bezier(0.32, 0.94, 0.60, 1.00);
+$easeInOutCubic: cubic-bezier(0.66, 0.00, 0.34, 1.00);
+
+/* Circ */
+$easeInCirc: cubic-bezier(0.54, 0.00, 1.00, 0.44);
+$easeOutCirc: cubic-bezier(0.00, 0.56, 0.46, 1.00);
+$easeInOutCirc: cubic-bezier(0.88, 0.14, 0.12, 0.86);
+
+/* Expo */
+$easeInExpo: cubic-bezier(0.66, 0.00, 0.86, 0.00);
+$easeOutExpo: cubic-bezier(0.14, 1.00, 0.34, 1.00);
+$easeInOutExpo: cubic-bezier(0.90, 0.00, 0.10, 1.00);
+
+/* Quad */
+$easeInQuad: cubic-bezier(0.26, 0.00, 0.60, 0.20);
+$easeOutQuad: cubic-bezier(0.40, 0.80, 0.74, 1.00);
+$easeInOutQuad: cubic-bezier(0.48, 0.04, 0.52, 0.96);
+
+/* Quart */
+$easeInQuart: cubic-bezier(0.52, 0.00, 0.74, 0.00);
+$easeOutQuart: cubic-bezier(0.26, 1.00, 0.48, 1.00);
+$easeInOutQuart: cubic-bezier(0.76, 0.00, 0.24, 1.00);
+
+/* Quint */
+$easeInQuint: cubic-bezier(0.64, 0.00, 0.78, 0.00);
+$easeOutQuint: cubic-bezier(0.22, 1.00, 0.36, 1.00);
+$easeInOutQuint: cubic-bezier(0.84, 0.00, 0.16, 1.00);
+
+/* Sine */
+$easeInSine: cubic-bezier(0.470, 0.000, 0.745, 0.715);
+$easeOutSine: cubic-bezier(0.390, 0.575, 0.565, 1.000);
+$easeInOutSine: cubic-bezier(0.445, 0.050, 0.550, 0.950);
+
+/* Back */
+$easeInBack: cubic-bezier(0.60, -0.28, 0.73, 0.04);
+$easeOutBack: cubic-bezier(0.17, 0.89, 0.32, 1.27);
+$easeInOutBack: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+
+/**
+ * Material easings
+ */
+
+$material-easings-standard:       cubic-bezier(0.4, 0.0, 0.2, 1);
+$material-easings-deceleration:   cubic-bezier(0.0, 0.0, 0.2, 1);
+$material-easings-acceleration:   cubic-bezier(0.4, 0.0, 1, 1);
+$material-easings-sharp:          cubic-bezier(0.4, 0.0, 0.6, 1);

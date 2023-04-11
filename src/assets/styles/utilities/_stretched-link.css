@@ -1,0 +1,10 @@
+@layer utilities {
+  @responsive {
+    .stretched-link {
+      &::after {
+        content: "";
+        @apply absolute inset-0 z-1;
+      }
+    }
+  }
+}

@@ -1,0 +1,1 @@
+<img{{ class is not same as(false) ? ' class="' ~ class|default('object-cover w-full h-full') ~ '"' }} src="{{ src }}"{{ srcset ? ' srcset="' ~ srcset ~ '"' }}{{ sizes ? ' sizes="' ~ sizes ~ '"' }} alt="{{ alt }}"{{ width ? ' width="' ~ width ~ '"' }}{{ height ? ' height="' ~ height ~ '"' }} loading="{{ loading|default('lazy') }}" {{ attr }}>

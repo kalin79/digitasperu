@@ -1,0 +1,39 @@
+.HomeLatestWork {
+  &__Subheading {
+    @screen lg {
+      flex: 1 1 15em;
+      width: 100%;
+      max-width: 25em;
+    }
+  }
+
+  &::before {
+    content: "";
+    @apply absolute bottom-0 inset-x-0 h-224 bg-black;
+  }
+
+  &__Project {
+    &--highlighted {
+      .CardEntity__Thumbnail {
+        @screen lg {
+          max-height: 40rem; /* 640px */
+
+          img {
+            @apply absolute top-0 left-0 w-full h-full object-cover;
+          }
+        }
+      }
+
+      .CardEntity__Body {
+        @screen lg {
+          @apply max-w-4/12;
+          width: calc((100% - var(--container-gutter-width)) / 2);
+        }
+      }
+    }
+
+    &:last-child:not(:only-child)  {
+      @apply text-white;
+    }
+  }
+}

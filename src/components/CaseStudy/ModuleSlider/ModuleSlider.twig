@@ -1,0 +1,17 @@
+<div class="ModuleSlider CaseModule container overflow-hidden" x-data>
+  {% embed '@Components/Slider/Slider.twig' %}
+    {% block slides %}
+      <div class="ModuleSlider__Slides Slider__Slides grid grid-flow-col items-center gap-x-32">
+        {% for item in items %}
+          <figure class="ModuleSlider__Slide Slider__Slide w-col-9/12 lg:w-col-5/12 bg-placeholder" x-appear:image>
+            {% if item.video %}
+              {% include '@Components/Video/Video.twig' with { src: item.video, poster: item.image ? item.image.src : false, attr: 'autoplay loop muted playsinline disablePictureInPicture' ~ (item.image ? ' aria-hidden="true"' : '') } only %}
+            {% elseif item.image %}
+              {% include '@Components/Image/Image.twig' with item.image only %}
+            {% endif %}
+          </figure>
+        {% endfor %}
+      </div>
+    {% endblock %}
+  {% endembed %}
+</div>

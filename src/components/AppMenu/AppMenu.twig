@@ -1,0 +1,36 @@
+<div
+  class="AppMenu fixed -z-1 inset-0 lg:static pt-64 lg:pt-0 overflow-hidden lg:overflow-visible pointer-events-none {{ class }}"
+  x-bind:class="{ 'pointer-events-auto': isOpened }"
+  x-data="AppMenu"
+  x-bind="$listeners"
+  {{ attr }}
+>
+  <div x-ref="curtain" class="absolute z-1 inset-0 lg:hidden bg-black pointer-events-none"></div>
+  <div ref="inner" class="AppMenu__Inner flex flex-col h-full overflow-auto lg:overflow-visible scrolling-hidden">
+    <div class="flex-grow flex-shrink-0 flex flex-col lg:flex-row lg:items-center px-24 pb-40 lg:p-0">
+      {% if items %}
+        <ul class="AppMenu__Nav flex flex-col lg:flex-row py-48 lg:py-0 text-48 font-roman leading-32 tracking-tightest lg:eyebrow lg:pointer-events-auto">
+          {% for item in items %}
+            <li x-ref="navItem" class="AppMenu__NavItem">
+              <a class="AppMenu__NavLink{{ item.current ? ' is-current' }}" href="{{ item.link }}" x-bind:tabindex="isSearchOpen ? -1 : 0">
+                {{- item.title -}}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+      {% if cta %}
+        {% include '@Components/Button/Button.twig' with cta|merge({
+          class: 'AppMenu__Cta self-start lg:self-center mt-32 lg:mt-0 lg:ml-auto pointer-events-auto',
+          attr: 'x-ref="cta" x-bind:tabindex="isSearchOpen ? -1 : 0"',
+          size: 'small',
+          style: 'solid'
+        }) %}
+      {% endif %}
+    </div>
+
+    <div x-ref="banner" class="AppMenu__BannerNews lg:hidden">
+      {{ BannerNews }}
+    </div>
+  </div>
+</div>

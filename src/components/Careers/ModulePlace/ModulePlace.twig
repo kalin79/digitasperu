@@ -1,0 +1,27 @@
+<div class="ModulePlace container py-global lg:py-240 bg-global" x-data>
+  <div class="ModulePlace__Heading lg:grid items-center gap-x-12 gap-y-16 lg:max-w-10/12 -mt-24 mx-auto mb-24 lg:mt-0 lg:mb-48 is-split" x-appear:title>
+    <h2 class="lg:contents">
+      {% for line in title %}
+        <span class="ModulePlace__Title title-big">
+          <span class="Line__Wrapper">
+            <span class="Line">
+              {{- line -}}
+            </span>
+          </span>
+        </span>
+      {% endfor %}
+    </h2>
+
+    <div class="ModulePlace__Subheading subheading-small mt-24 justify-self-center lg:mt-0 lg:max-w-3/12">
+      {{- subheading -}}
+    </div>
+  </div>
+
+  <div class="ModulePlace__Image col-span-default lg:col-start-7 lg:col-span-4 self-center lg:order-last mb-56 lg:mb-0 bg-placeholder" x-appear:image>
+    {% include '@Components/Image/Image.twig' with image only %}
+  </div>
+
+  <div class="ModulePlace__Content col-span-default lg:col-start-3 lg:col-span-4 lg:w-full lg:max-w-4/12 lg:ml-auto self-center grid gap-y-20 lg:gap-y-32 list-checked">
+    {{- content -}}
+  </div>
+</div>

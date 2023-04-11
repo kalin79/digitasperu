@@ -1,0 +1,1 @@
+<video{{ class is not same as(false) ? ' class="' ~ class|default('object-cover w-full h-full') ~ '"' }} src="{{ src }}"{{ poster ? ' poster="' ~ poster ~ '"' }}{{ width ? ' width="' ~ width ~ '"' }}{{ height ? ' height="' ~ height ~ '"' }}{{ title ? ' title="' ~ title ~ '"' }} {{ attr }}></video>

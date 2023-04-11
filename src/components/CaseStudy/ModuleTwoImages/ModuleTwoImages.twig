@@ -1,0 +1,13 @@
+<div class="ModuleTwoImages CaseModule container justify-center overflow-hidden" x-data>
+  <div class="grid grid-rows-2 lg:grid-rows-none lg:grid-cols-2 gap-y-16 gap-x-gutter">
+    {% for media in medias %}
+      <figure class="ModuleTwoImages__Image bg-placeholder" x-appear:image>
+        {% if media.video %}
+          {% include '@Components/Video/Video.twig' with { src: media.video, poster: media.image ? media.image.src : false, attr: 'autoplay loop muted playsinline disablePictureInPicture' ~ (media.image ? ' aria-hidden="true"' : '') } only %}
+        {% elseif media.image %}
+          {% include '@Components/Image/Image.twig' with media.image only %}
+        {% endif %}
+      </figure>
+    {% endfor %}
+  </div>
+</div>

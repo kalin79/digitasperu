@@ -1,0 +1,6 @@
+.AboutVideo {
+  &::before {
+    content: "";
+    @apply absolute inset-x-0 bottom-0 h-1/2 bg-black;
+  }
+}

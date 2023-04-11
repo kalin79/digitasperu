@@ -1,0 +1,22 @@
+{% set settings = { address: address, location: location } %}
+
+<div class="OfficeDetails container pt-48 lg:pt-120 bg-global" x-data="OfficeDetails({{ settings|json_encode|e('html_attr') }})">
+  <h1 class="mb-56 mt-72 lg:mb-64 lg:mt-112 title-big" x-appear:title>{{ title }}</h1>
+
+  <div class="col-span-default lg:col-start-2 lg:col-span-2 mb-32">
+    <div class="mb-12 eyebrow">Address</div>
+    {{ address }}
+  </div>
+
+  <div class="col-span-default lg:col-span-2 mb-32">
+    <div class="mb-12 eyebrow">Let’s connect</div>
+    {% if phone %}<a href="tel:{{ phone }}">{{ phone }}</a><br>{% endif %}
+    {% if email %}<a href="mailto:{{ email }}">{{ email }}</a><br>{% endif %}
+  </div>
+
+  <figure class="OfficeDetails__Image relative z-1 col-span-default lg:col-start-8 lg:col-span-4 lg:-mt-48 bg-placeholder" x-appear:image>
+    {% include '@Components/Image/Image.twig' with image only %}
+  </figure>
+
+  <div x-ref="map" class="OfficeDetails__Map col-span-full -mx-container mt-64 lg:mt-0"></div>
+</div>

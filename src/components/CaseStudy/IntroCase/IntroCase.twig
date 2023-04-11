@@ -1,0 +1,41 @@
+<div class="IntroCase CaseModule container bg-global">
+  {% if tags %}
+    <div class="IntroCase__Tags mb-56 lg:mb-80">
+      <ul class="flex flex-wrap -m-4">
+        {% for tag in tags %}
+          <li class="m-4">
+            {% set settings = {
+              label: tag.title,
+              outline: true
+            } %}
+            {% if tag.link %}
+              {% set settings = settings|merge({
+                tag: 'a',
+                attr: 'href="' ~ tag.link ~ '"'
+              }) %}
+            {% endif %}
+            {% include '@Components/Chip/Chip.twig' with settings only %}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  {% if insight %}
+    <div class="IntroCase__Insight col-span-default lg:col-start-2 lg:col-span-4 mb-64 lg:mb-0">
+      <div class="lg:max-w-4/12">
+        <div class="mb-16 lg:mb-32 eyebrow">Insight</div>
+        <div class="paragraph-large">{{ insight }}</div>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if idea %}
+    <div class="IntroCase__Idea col-span-default lg:col-start-7 lg:col-span-5">
+      <div class="lg:max-w-4/12">
+        <div class="mb-16 lg:mb-32 eyebrow">Idea</div>
+        <div class="paragraph-large">{{ idea }}</div>
+      </div>
+    </div>
+  {% endif %}
+</div>

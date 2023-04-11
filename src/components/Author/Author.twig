@@ -1,0 +1,19 @@
+<div class="Author relative {{ class }}" {{ attr }}>
+  {% if avatar %}
+    <figure class="Author__Avatar w-40 h-40 mr-8 rounded-full overflow-hidden bg-placeholder">
+      {% include '@Components/Image/Image.twig' with avatar|merge({ class: 'w-full h-full object-cover rounded-full' }) only %}
+    </figure>
+  {% endif %}
+
+  <div class="Author__Name font-medium text-14 lg:text-16">
+    {% if link %}
+      <a href="{{ link }}" class="stretched-link">{{ name }}</a>
+    {% else %}
+      {{- name -}}
+    {% endif %}
+  </div>
+
+  {% if title %}
+    <div class="Author__Title text-10 lg:text-11 font-roman italic uppercase">{{ title }}</div>
+  {% endif %}
+</div>

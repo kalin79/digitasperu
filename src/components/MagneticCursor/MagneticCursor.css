@@ -1,0 +1,4 @@
+.MagneticCursor {
+  @apply z-2;
+  transform: translate(var(--cursor-x, 0), var(--cursor-y, 0));
+}

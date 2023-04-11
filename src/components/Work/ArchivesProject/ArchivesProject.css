@@ -1,0 +1,31 @@
+.ArchivesProject {
+  &__Heading {
+    @apply lg:grid items-baseline gap-x-gutter;
+    grid-template-columns: 1fr auto;
+  }
+
+  &__ActiveFilters {
+    @screen lg {
+      min-height: calc(2 * (theme('height.32') + theme('spacing.16')));
+    }
+
+    &::before {
+      @screen lg {
+        content: "";
+        @apply block w-1/2 max-w-8/12;
+      }
+    }
+  }
+
+  &__Column {
+    &:last-of-type {
+      @apply lg:mt-104;
+    }
+  }
+
+  &__BackToTopButton {
+    .Button__Icon {
+      transform: rotate(-90deg);
+    }
+  }
+}

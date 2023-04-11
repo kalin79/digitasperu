@@ -1,0 +1,16 @@
+.ScrollHint {
+  @apply inline-grid items-center align-middle;
+  font-size: 2.5rem; /* 40px */
+  @apply leading-0;
+  transform: rotate(90deg);
+
+  &::before {
+    content: "";
+    display: block;
+    padding-top: 100%;
+  }
+  &::before,
+  & > * {
+    @apply row-start-1 col-start-1;
+  }
+}

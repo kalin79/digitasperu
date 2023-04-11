@@ -1,0 +1,71 @@
+{% set drawerTitle = title|default('Share') %}
+{% set componentId = uniqid|default('') ~ 'Share' %}
+{% set settings = {
+  shareUrl: shareUrl,
+  shareText: shareText,
+  copyConfirmationMsg: 'Copied!',
+} %}
+{% set sharers = {
+  facebook: 'Share on Facebook',
+  twitter: 'Share on Twitter',
+  linkedin: 'Share on LinkedIn',
+  link: 'Copy link to clipboard',
+} %}
+
+<div
+  x-cloak
+  class="Share relative pointer-events-none {{ class }}"
+  x-data="Share({{ settings|json_encode|e('html_attr') }})"
+  x-on:click.outside="close"
+  {{ attr }}
+>
+  {% include '@Components/RoundButton/RoundButton.twig' with {
+    icon: 'share',
+    outline: true,
+    class: 'Share__Toggler pointer-events-auto',
+    attr: 'x-bind:class="{ active: isOpen }" title="' ~ drawerTitle ~ '" aria-haspopup="true" aria-controls="' ~ componentId ~'Items" x-bind:aria-expanded="isOpen" x-on:click="toggle"' ~ buttonAttr
+  } %}
+
+  <div
+    class="Share__Drawer fixed lg:absolute inset-0 lg:top-full lg:bottom-auto lg:left-1/2 lg:right-auto flex items-end lg:-ml-24 lg:mt-8"
+    x-bind:class="{ 'pointer-events-auto': isOpened }"
+    x-on:keyup.escape.window="close"
+  >
+    <div x-ref="backdrop" class="lg:hidden absolute inset-0 bg-black bg-opacity-80" x-on:click="close"></div>
+    <aside
+      x-ref="container"
+      class="Share__Container flex flex-col justify-center items-center w-full h-232 lg:w-auto lg:h-auto bg-white lg:bg-transparent text-center"
+    >
+      <div x-ref="title" id="{{ componentId }}Title" class="Share__Title lg:hidden mb-12 text-black">{{ drawerTitle }}</div>
+      <ul
+        x-ref="list"
+        id="{{ componentId }}Items"
+        role="menu"
+        class="Share__Items flex flex-row lg:flex-col items-center justify-center h-48 lg:h-auto lg:w-48 px-20 lg:px-0 lg:py-20 space-x-16 lg:space-x-0 lg:space-y-16 rounded pointer-events-auto"
+        aria-labelledby="{{ componentId }}Title"
+      >
+        {% for sharer, sharerTitle in sharers %}
+          <li role="none" class="Share__Item">
+            <button type="button" role="menuitem" class="Share__Action block" title="{{ sharerTitle }}" x-on:click="share('{{ sharer }}')">
+              {% include '@Components/Icon/Icon.twig' with { icon: sharer, attr: 'aria-hidden="true" focusable="false"' } only %}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+
+      <span
+        x-show="isLinkCopied"
+        class="Share__CopyConfirmation absolute inset-x-0 bottom-0 lg:top-full h-72 flex justify-center items-center lg:items-start lg:mt-8 text-12 font-medium"
+        x-text="copyConfirmationMsg"
+      ></span>
+
+      <div class="Share__Close lg:hidden absolute top-0 inset-x-0 flex justify-center">
+        {% include '@Components/RoundButton/RoundButton.twig' with {
+          icon: 'close',
+          class: 'Share__CloseButton',
+          attr: 'x-ref="close" x-on:click.prevent="close"'
+        } only %}
+      </div>
+    </aside>
+  </div>
+</div>

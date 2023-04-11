@@ -1,0 +1,87 @@
+<div
+  x-cloak
+  x-data="SearchDrawer({ apiUrl: 'https://dbdaba0c-281a-4d3e-8f76-9d50788d8af8.mock.pstmn.io/api/content/search' })"
+  class="SearchDrawer fixed z-search inset-0 overflow-hidden pointer-events-none"
+  role="dialog"
+  aria-modal="true"
+  x-on:keyup.escape.window="close"
+>
+  <div
+    class="absolute inset-0 -z-1"
+    x-bind:class="{ 'pointer-events-auto': isOpened }"
+    x-on:click="close"
+  ></div>
+  <div
+    x-ref="inner"
+    class="SearchDrawer__Inner flex flex-col h-full overflow-x-hidden overflow-y-auto overscroll-y-contain text-white"
+    x-bind:class="{ 'pointer-events-auto': isOpened }"
+    x-on:click.self="close"
+  >
+    <div class="SearchDrawer__SearchBar sticky top-0 z-1">
+      <div x-ref="background" class="absolute -z-1 inset-0 bg-gray-900 pointer-events-none"></div>
+      <div
+        x-ref="content"
+        class="container border-white border-opacity-30"
+        x-bind:class="{ 'border-b': hasQuery }"
+      >
+        <form
+          action="/search"
+          method="GET"
+          role="search"
+          class="SearchDrawer__Form col-span-default lg:col-span-full lg:-mx-container py-40 lg:px-56 lg:py-88"
+          autocomplete="off"
+          x-on:submit.prevent="submit"
+        >
+          <input
+            x-ref="input"
+            type="search"
+            class="SearchDrawer__Input w-full paragraph-big lg:title-medium"
+            name="query"
+            x-model.debounce.500ms="query"
+            minlength="2"
+            autocorrect="off"
+            autocapitalize="off"
+            placeholder="{{ placeholder|default('Search and you shall find')|e('html_attr') }}"
+            x-on:input="isPending=true"
+          >
+        </form>
+      </div>
+    </div>
+    <div
+      x-show="hasQuery"
+      class="SearchDrawer__Results relative flex-1 py-20 lg:py-32"
+    >
+      <div x-ref="background" class="absolute -z-1 inset-0 bg-gray-900 pointer-events-none"></div>
+      <div
+        x-ref="content"
+        x-show="hasAnyResults"
+        class="SearchDrawer__ResultsInner container"
+        x-bind:class="{ 'is-pending': isPending }"
+      >
+        <div class="col-span-default lg:col-start-1 lg:col-span-6 mb-32 lg:mb-0 lg:-mx-container lg:px-56">
+          <span class="lg:absolute m-paragraph lg:title-small" x-text="resultsLabel"></span>
+        </div>
+
+        <div class="col-span-default lg:col-start-7 lg:col-span-5">
+          <template x-if="hasResults">
+            <template x-for="group in results">
+              <div class="mb-32 lg:mb-56">
+                <div class="my-8 lg:mb-24 cap-title-small-italic uppercase" x-text="group.title"></div>
+                <ul>
+                  <template x-for="item in group.items">
+                    <li class="mb-8 lg:mb-32">
+                      <a class="m-paragraph lg:title-small" x-bind:href="item.link" x-text="item.title"></a>
+                    </li>
+                  </template>
+                </ul>
+              </div>
+            </template>
+          </template>
+          <template x-if="!hasResults">
+            <p>Sorry, there’s no results for '<strong x-text="query"></strong>'</p>
+          </template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

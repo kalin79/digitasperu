@@ -1,0 +1,5 @@
+.Slider {
+  &__Track {
+    will-change: transform;
+  }
+}

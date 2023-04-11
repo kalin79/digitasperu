@@ -1,0 +1,8 @@
+{% set tag = tag|default('span') %}
+<{{ tag }} class="Chip{% if outline %} Chip--outline{% endif %} {{ class }}" {{ attr }}>
+  <span class="Chip__Label">{{ label }}</span>
+  {% if dismiss %}
+    {% include '@Components/Icon/Icon.twig' with { icon: 'close', class: 'ml-10', attr: 'aria-hidden="true" focusable="false"' } only %}
+  {% endif %}
+</{{ tag }}>
+

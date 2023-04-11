@@ -1,0 +1,184 @@
+@layer base {
+  :root {
+    --global-font-size: theme('fontSize.16');
+    --global-line-height: theme('fontSize.16.1');
+  }
+
+  body {
+    --line-height: var(--global-line-height, theme('fontSize.16.1'));
+    @apply antialiased font-sans font-book;
+    font-size: var(--global-font-size, theme('fontSize.16'));
+    line-height: var(--line-height);
+  }
+
+  b, strong {
+    @apply font-heavy;
+  }
+
+  p:not([class]):not(:last-child) {
+    margin-bottom: calc(var(--line-height, var(--global-line-height)) * 1em);
+  }
+
+  /*a:not([class]) {
+    @apply underline;
+
+    &:hover {
+      @apply no-underline;
+    }
+  }*/
+
+  @responsive {
+    .title-big {
+      --line-height: theme('fontSize.48.1.lineHeight');
+      @apply font-sans font-roman;
+      font-size: theme('fontSize.48.0');
+      line-height: var(--line-height);
+      letter-spacing: theme('fontSize.48.1.letterSpacing');
+
+      @screen lg {
+        --line-height: theme('fontSize.128.1.lineHeight');
+        font-size: clamp(theme('fontSize.48.0'), calc(128 / $mockup-width * (100 * var(--vw, 1vw))), theme('fontSize.128.0'));
+        letter-spacing: theme('fontSize.128.1.letterSpacing');
+      }
+    }
+
+    .title-large {
+      --line-height: theme('fontSize.48.1.lineHeight');
+      @apply font-sans font-roman;
+      font-size: theme('fontSize.48.0');
+      line-height: var(--line-height);
+      letter-spacing: theme('fontSize.48.1.letterSpacing');
+
+      @screen lg {
+        --line-height: theme('fontSize.96.1.lineHeight');
+        font-size: clamp(theme('fontSize.48.0'), calc(96 / $mockup-width * (100 * var(--vw, 1vw))), theme('fontSize.96.0'));
+        letter-spacing: theme('fontSize.96.1.letterSpacing');
+      }
+    }
+
+    .title-medium {
+      --line-height: theme('fontSize.32.1.lineHeight');
+      @apply font-sans font-roman tracking-tighter;
+      font-size: theme('fontSize.32.0');
+      line-height: var(--line-height);
+
+      @screen lg {
+        --line-height: theme('fontSize.64.1.lineHeight');
+        font-size: clamp(theme('fontSize.32.0'), calc(64 / $mockup-width * (100 * var(--vw, 1vw))), theme('fontSize.64.0'));
+        letter-spacing: theme('fontSize.64.1.letterSpacing');
+      }
+    }
+
+    .title-small {
+      --line-height: theme('fontSize.24.1');
+      @apply font-sans font-roman tracking-tight;
+      font-size: theme('fontSize.24.0');
+      line-height: var(--line-height);
+
+      @screen lg {
+        --line-height: theme('fontSize.32.1.lineHeight');
+        font-size: theme('fontSize.32.0');
+        letter-spacing: theme('fontSize.32.1.letterSpacing');
+      }
+    }
+
+    .paragraph-big {
+      --line-height: theme('fontSize.24.1');
+      @apply font-sans font-roman tracking-tight;
+      font-size: theme('fontSize.24.0');
+      line-height: var(--line-height);
+
+      @screen lg {
+        --line-height: theme('lineHeight.tight');
+        font-size: theme('fontSize.32.0');
+        letter-spacing: theme('fontSize.32.1.letterSpacing');
+      }
+    }
+
+    .paragraph-large,
+    .m-paragraph {
+      --line-height: theme('fontSize.18.1');
+      @apply font-sans font-book;
+      font-size: theme('fontSize.18.0');
+      line-height: var(--line-height);
+    }
+    .paragraph-large {
+      @screen lg {
+        --line-height: theme('lineHeight.relaxed');
+        font-size: theme('fontSize.20.0');
+      }
+    }
+
+    .paragraph {
+      --line-height: theme('fontSize.16.1');
+      @apply font-sans font-book;
+      font-size: theme('fontSize.16.0');
+      line-height: var(--line-height);
+    }
+
+    .subheading-small {
+      --line-height: theme('fontSize.18.1');
+      @apply font-sans font-book tracking-tightest;
+      font-size: theme('fontSize.18.0');
+      line-height: var(--line-height);
+    }
+
+    .cap-small {
+      @apply font-sans font-heavy text-11 uppercase;
+    }
+
+    .cap-title-small-italic {
+      @apply font-sans font-roman italic;
+      @plumber {
+        font-size: 1.5; /* 12px / 8 */
+        line-height: 2; /* 16px / 8 */
+        leading-top: 1;
+      }
+    }
+
+    .eyebrow {
+      @apply font-sans font-heavy text-12 uppercase tracking-widest;
+    }
+  }
+}
+
+@responsive {
+  .list-checked {
+    > li {
+      @apply relative pl-32;
+
+      &::before {
+        content: "";
+        @apply absolute left-0 w-24 h-24;
+        top: calc(0.5 * var(--line-height) * 1em);
+        margin-top: calc(theme('height.24') / -2);
+        background-image: url('data:image/svg+xml, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 4a8 8 0 100 16 8 8 0 000-16zM2 12a10 10 0 1120 0 10 10 0 01-20 0zm14.66-3.25a1 1 0 01.09 1.41l-5.34 6a1 1 0 01-1.5 0l-2.66-3a1 1 0 011.5-1.32l1.92 2.15 4.58-5.15a1 1 0 011.41-.09z"/></svg>');
+        background-size: 100%;
+      }
+
+      &:not(:last-child) {
+        @apply mb-16;
+      }
+    }
+  }
+
+  .list-starred {
+    > li {
+      @apply relative;
+      padding-left: 1.6em;
+
+      &::before {
+        content: "";
+        @apply absolute left-0;
+        top: .2em;
+        size: 1em;
+        background-image: url('data:image/svg+xml, <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 21"><circle cx="10" cy="10.19" r="9.5" stroke="#000"/><path fill="#000" d="M10 3.94s.38 3.19 1.72 4.53c1.34 1.34 4.53 1.72 4.53 1.72s-3.2.38-4.53 1.72C10.38 13.24 10 16.44 10 16.44s-.38-3.2-1.72-4.53c-1.34-1.34-4.53-1.72-4.53-1.72s3.2-.38 4.53-1.72C9.62 7.13 10 3.94 10 3.94z"/></svg>');
+        background-size: 100%;
+      }
+
+      &:not(:last-child) {
+        margin-bottom: .8em;
+      }
+    }
+  }
+}

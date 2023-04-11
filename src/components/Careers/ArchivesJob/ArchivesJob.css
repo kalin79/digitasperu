@@ -1,0 +1,31 @@
+.ArchivesJob {
+  &__Heading {
+    @apply lg:grid items-baseline gap-x-gutter;
+    grid-template-columns: auto 1fr;
+  }
+
+  &__Body {
+    @screen lg {
+      margin-top: -17rem; /* 272px */
+    }
+  }
+
+  &__Scroller {
+    --scroll-offset-x: calc(var(--container-column-width) + var(--container-gutter-width));
+  }
+
+  &__Cities {
+    &::before,
+    &::after {
+      content: "";
+      @apply block lg:hidden h-px flex-none;
+      width: var(--scroll-offset-x);
+    }
+  }
+
+  &__Tab[aria-selected="true"] &__TabLabel {
+    @apply bg-gradient-to-l from-primary to-secondary;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}

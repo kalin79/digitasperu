@@ -1,0 +1,23 @@
+{% set nbImages = contacts|length > 2 ? 2 : 3 %}
+
+<div class="LetsConnect container py-48 lg:py-120 bg-global" x-data>
+  <h1 class="mb-56 mt-72 lg:mb-40 lg:mt-192 title-big text-center" x-appear:title="$store.app.isReady">{{ title }}</h1>
+
+  <div class="LetsConnect__Images col-span-default lg:col-start-2 lg:col-span-6 grid grid-cols-10 lg:grid-cols-6 gap-x-gutter items-start pb-24 lg:pb-0">
+    {% for image in images %}
+      <div class="LetsConnect__Image bg-placeholder{% if loop.index > nbImages %} lg:hidden{% endif %}" x-appear:image>
+        {% include '@Components/Image/Image.twig' with image only %}
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="col-span-default lg:col-span-4">
+    {% for contact in contacts %}
+      <div class="mt-48 lg:mt-80 space-y-12">
+        <div class="title-medium">{{ contact.type }}</div>
+        {% include '@Components/Author/Author.twig' with contact.person only %}
+        {% include '@Components/Button/Button.twig' with contact.cta only %}
+      </div>
+    {% endfor %}
+  </div>
+</div>

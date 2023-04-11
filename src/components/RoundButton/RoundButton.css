@@ -1,0 +1,53 @@
+@layer components {
+  .RoundButton {
+    @apply inline-block align-middle;
+    @apply rounded-full;
+    background: none;
+    color: var(--RoundButton-color, inherit);
+    @apply focus:outline-none;
+    filter: invert(var(--invert, 0));
+
+    &--invert {
+      color: var(--RoundButton-bg, theme('textColor.white'));
+
+      .RoundButton__Inner::before {
+        background-color: var(--RoundButton-color, theme('backgroundColor.black'));
+      }
+    }
+
+    &--outline {
+      .RoundButton__Inner::before {
+        background: none;
+        box-shadow: inset 0 0 0 1px currentColor;
+      }
+    }
+
+    &__Inner {
+      @apply grid place-items-center h-full;
+
+      &::before {
+        content: "";
+        @apply row-start-1 col-start-1 -z-1;
+        @apply w-full h-full rounded-full;
+        background-color: var(--RoundButton-bg, theme('backgroundColor.white'));
+
+        .no-touch & {
+          transition: transform .333s cubic-bezier(0.32, 0.94, 0.60, 1.00);
+        }
+      }
+
+      > * {
+        @apply row-start-1 col-start-1;
+      }
+    }
+
+    .no-touch &:focus,
+    .no-touch &:hover {
+      .RoundButton__Inner::before {
+        transform: scale(1.2);
+        transition-duration: .833s;
+        transition-timing-function: cubic-bezier(0.17, 0.89, 0.32, 1.27);
+      }
+    }
+  }
+}

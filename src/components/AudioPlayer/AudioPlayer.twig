@@ -1,0 +1,28 @@
+<div x-cloak class="AudioPlayer {{ class }}" x-data="AudioPlayer" {{ attr }}>
+  <div x-ref="cursorWrapper" class="AudioPlayer__CursorWrapper">
+    <div x-ref="cursor" class="AudioPlayer__Cursor">
+      <button
+        x-ref="cursorButton"
+        type="button"
+        class="AudioPlayer__CursorButton RoundButton w-80 h-80"
+        x-bind:class="{ 'is-visible': !isPlayerVisible }"
+        aria-label="Play audio"
+        x-on:click="showAndPlay"
+      >
+        <span class="RoundButton__Inner">
+          {% include '@Components/Icon/Icon.twig' with { icon: 'volume-up', class: 'RoundButton__Icon', attr: 'aria-hidden="true" focusable="false"' } only %}
+          {% include '@Components/Icon/Icon.twig' with { icon: 'play', class: 'RoundButton__Icon', attr: 'aria-hidden="true" focusable="false"' } only %}
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <div
+    class="AudioPlayer__Bar fixed z-drawer bottom-0 inset-x-0 flex flex-col h-72 bg-global"
+    x-bind:class="{ 'is-visible': isPlayerVisible }"
+  >
+    <audio src="{{ src }}" x-bind="playerProps" x-on:ended="hide"></audio>
+
+    {% include '@Components/PlayerControls/PlayerControls.twig' with { class: 'AudioPlayer__Controls flex-1' } only %}
+  </div>
+</div>

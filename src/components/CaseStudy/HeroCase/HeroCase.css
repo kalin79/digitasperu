@@ -1,0 +1,16 @@
+.HeroCase {
+  &__Cover {
+    @apply relative;
+    height: 18rem; /* 288px */
+
+    @screen lg {
+      height: 30.5rem; /* 488px */
+    }
+
+    &::before {
+      content: "";
+      @apply absolute inset-0 pointer-events-none;
+      background: linear-gradient(180deg, rgba(#000, .1) 0%, rgba(#000, 0) 40.78%);
+    }
+  }
+}

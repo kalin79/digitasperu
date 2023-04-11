@@ -1,0 +1,28 @@
+@layer utilities {
+  :root {
+    --container-margin: theme('container.margin.DEFAULT', 0);
+    --container-gutter-width: theme('container.gutterWidth.DEFAULT', 0);
+    --container-column-width: calc(((100 * var(--vw, 1vw)) - (2 * var(--container-margin)) - (var(--container-gutter-width) * (var(--container-nb-columns) - 1))) / var(--container-nb-columns));
+    --container-column-max-width: theme('container.columnWidth.DEFAULT', 0);
+    --container-nb-columns: theme('container.nbColumns.DEFAULT', 12);
+
+    @screen lg {
+      --container-margin: theme('container.margin.lg');
+      --container-gutter-width: theme('container.gutterWidth.lg');
+      --container-column-max-width: theme('container.columnWidth.lg');
+      --container-nb-columns: theme('container.nbColumns.lg');
+    }
+  }
+
+  .container {
+    @apply grid;
+    grid-template-columns: repeat(var(--container-nb-columns), minmax(0, 1fr));
+    grid-column-gap: var(--container-gutter-width);
+    @apply w-full;
+    padding: * var(--container-margin);
+
+    > :not([class*="col-"]) {
+      @apply w-full col-span-default;
+    }
+  }
+}

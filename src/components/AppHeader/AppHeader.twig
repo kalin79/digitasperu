@@ -1,0 +1,77 @@
+{% set settings = {
+  dark: dark is defined ? dark : '',
+  withProgress: withProgress|default(false)
+} %}
+
+<div
+  class="AppHeader"
+  x-data="AppHeader({{ settings|json_encode|e('html_attr') }})"
+  x-bind:class="{ 'is-sticky': isSticky, 'is-visible': isVisible, 'is-search-open': isSearchOpen }"
+  x-trap="shouldTrap"
+>
+  <nav
+    x-ref="navbar"
+    class="AppHeader__Navbar{% if dark %} is-dark{% endif %} flex px-24 lg:px-56 pointer-events-none"
+    x-bind:class="{ 'is-dark': isNavbarDark }"
+    aria-label="Main navbar"
+  >
+    <a href="{{ homeLink }}" class="AppHeader__Brand block self-center -m-16 p-16 pointer-events-auto" x-bind:tabindex="isSearchOpen ? -1 : 0">
+      <img class="max-w-none lg:mb-4" src="/assets/svg/logo-digitas.svg" alt="Digitas" width="91" height="13">
+    </a>
+
+    <div class="AppHeader__Menu flex-1 grid h-64 lg:h-72 ml-24 lg:ml-40" data-page-title="{{ pageTitle|e('html_attr') }}">
+      <div x-ref="menuInner" class="AppHeader__MenuInner row-start-1 col-start-1 flex items-center">
+        <div x-ref="menuWrapper" class="AppMenu__Wrapper flex-1" x-bind:class="{ 'is-dark': isMenuDark }">
+          {% include '@Components/AppMenu/AppMenu.twig' with menu only %}
+        </div>
+
+        <button
+          type="button"
+          class="AppHeader__SearchButton RoundButton RoundButton--invert w-40 h-40 text-20 ml-auto lg:ml-16 pointer-events-auto"
+          x-bind:class="{ 'is-active': isSearchOpen }"
+          aria-label="Toggle search"
+          x-on:click="toggleSearch"
+        >
+          <span class="RoundButton__Inner pointer-events-none">
+            <span x-show="!isSearchOpen" x-transition.opacity.150ms>
+              {% include '@Components/Icon/Icon.twig' with { icon: 'search', class: 'RoundButton__Icon', attr: 'aria-hidden="true" focusable="false"' } only %}
+            </span>
+            <span x-show="isSearchOpen" x-transition.opacity.150ms>
+              {% include '@Components/Icon/Icon.twig' with { icon: 'plus', class: 'RoundButton__Icon', attr: 'aria-hidden="true" focusable="false"' } only %}
+            </span>
+          </span>
+        </button>
+      </div>
+      {% if pageTitle %}
+        <div x-ref="pageTitle" class="AppHeader__PageTitle hidden" aria-hidden="true">
+          {{- pageTitle -}}
+        </div>
+      {% endif %}
+    </div>
+
+    <button
+      type="button"
+      class="AppHeader__Toggler w-24 ml-10 focus:outline-none pointer-events-auto"
+      aria-label="Toggle menu"
+      x-bind:tabindex="isSearchOpen ? -1 : 0"
+      x-on:click="toggleMenu"
+    >
+      <span class="AppHeader__TogglerInner pointer-events-none">
+        <span x-show="!isMenuOpen" x-transition.opacity.150ms>
+          {% include '@Components/Icon/Icon.twig' with { icon: 'burger', attr: 'aria-hidden="true" focusable="false"' } only %}
+        </span>
+        <span x-show="isMenuOpen" x-transition.opacity.150ms>
+          <span class="Icon Icon--close" aria-hidden="true" focusable="false"></span>
+        </span>
+      </span>
+    </button>
+  </nav>
+
+  <div class="AppHeader__Background{% if withProgress %} AppHeader__Background--withProgress{% endif %} fixed z-header-bg top-0 inset-x-0 bg-global">
+    {% if withProgress %}
+      <div x-ref="progress" class="AppHeader__Background__Progress bg-primary"></div>
+    {% endif %}
+  </div>
+
+  {% include '@Components/SearchDrawer/SearchDrawer.twig' with {} only %}
+</div>

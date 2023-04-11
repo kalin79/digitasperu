@@ -1,0 +1,9 @@
+.HeroTitle {
+  &__Title {
+    --line-height: theme('lineHeight.tight');
+
+    @screen lg {
+      max-width: 15em;
+    }
+  }
+}

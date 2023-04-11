@@ -1,0 +1,38 @@
+{% set settings = {
+  speed: speed|default(100),
+  roll: roll is defined ? roll : true
+} %}
+
+<div
+  class="BannerNews h-64 lg:h-72 bg-black text-white whitespace-nowrap overflow-hidden select-none"
+  x-data="BannerNews({{ settings|json_encode|e('html_attr') }})"
+  x-bind="$listeners"
+  role="marquee"
+>
+  <div x-ref="track" class="inline-flex h-full bg-black">
+    <div x-ref="items" class="flex">
+      {% for item in items %}
+        <div x-ref="item" class="relative flex-none flex items-center">
+          {% if item.category or item.icon %}
+            <div class="mx-8 lg:mx-16">
+              {% if item.category %}
+                <span class="font-black text-12 tracking-tighter uppercase italic">{{ item.category }}</span>
+              {% elseif item.icon %}
+                {% include '@Components/Icon/Icon.twig' with { icon: item.icon, class: 'BannerNews__Icon', attr: 'aria-hidden="true" focusable="false"' } only %}
+              {% endif %}
+            </div>
+          {% endif %}
+          <div class="mx-8 lg:mx-16 font-roman text-16 lg:text-20 tracking-tighter uppercase">
+            {% if item.link %}
+              <a href="{{ item.link }}" class="stretched-link" x-cursor:label="view">
+                <span x-ref="title" class="BannerNews__Title block overflow-hidden">{{ item.title }}</span>
+              </a>
+            {% else %}
+              <span x-ref="title" class="BannerNews__Title block overflow-hidden">{{ item.title }}</span>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>

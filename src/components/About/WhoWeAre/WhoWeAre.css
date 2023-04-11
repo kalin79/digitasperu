@@ -1,0 +1,30 @@
+.WhoWeAre {
+  &__content {
+    @apply pb-56;
+
+    @screen lg {
+      padding: 4.75rem * 16.5rem;
+    }
+  }
+}
+
+.WhoWeAre__logo{
+  width: 100%;
+  @apply -bottom-20;
+  right: 0;
+  position: absolute;
+  background-image: url('~@/assets/svg/logo-digitas-big.svg');
+  background-size: cover;
+  &:after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+  }
+}
+
+@screen lg {
+  .WhoWeAre__logo{
+    width: 75%;
+    right: var(--container-gutter-width);
+  }
+}

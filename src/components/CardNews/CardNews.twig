@@ -1,0 +1,23 @@
+<article class="CardNews relative lg:max-w-5/12 {{ class }}" {{ attr }}>
+  <div class="CardNews__Header flex mb-16 -mx-12 lg:mb-24 cap-small divide-x divide-current">
+    <span class="px-12">News</span>
+    <span class="px-12">{{ date|date('F j, Y') }}</span>
+  </div>
+  <div class="CardNews__Title paragraph-big mb-16 lg:mb-32">
+    {% if link %}
+      <a href="{{ link.url }}">{{- title -}}</a>
+    {% else %}
+      {{- title -}}
+    {% endif %}
+  </div>
+  {% if excerpt %}
+    <div class="CardNews__Excerpt m-paragraph lg:paragraph mb-32">
+      {{- excerpt -}}
+    </div>
+  {% endif %}
+  {% if link %}
+    <div class="CardNews__Footer">
+      {% include '@Components/Button/Button.twig' with link|merge({ style: 'link', class: 'lg:stretched-link', attr: 'tabindex="-1"' }) only %}
+    </div>
+  {% endif %}
+</article>

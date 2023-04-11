@@ -1,0 +1,27 @@
+<div class="HomeLatestWork relative container -mb-8 lg:mb-0 py-global lg:pb-8 bg-global">
+  <div class="HomeLatestWork__Header mb-48">
+    <div class="lg:flex flex-wrap items-center">
+      <h2 class="HomeLatestWork__Title flex-none title-large lg:mr-64" x-appear:title>{{ title }}</h2>
+      {% if subheading %}
+        <div class="HomeLatestWork__Subheading mt-24 justify-self-center lg:mt-0 lg:mr-40 subheading-small">
+          {{- subheading -}}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="HomeLatestWork__Projects lg:grid lg:grid-cols-2 lg:gap-x-gutter">
+    {% if highlightedProject %}
+      {% include '@Components/CardProject/CardProject.twig' with highlightedProject|merge({ class: 'HomeLatestWork__Project HomeLatestWork__Project--highlighted col-span-2 mb-24 lg:mb-56' }) only %}
+    {% endif %}
+
+    <div>
+      {% include '@Components/CardProject/CardProject.twig' with projects[0]|merge({ class: 'HomeLatestWork__Project mb-24 lg:mb-56' }) only %}
+    </div>
+    <div class="lg:-mt-104">
+      {% for i in 1..2 %}
+        {% include '@Components/CardProject/CardProject.twig' with projects[i]|merge({ class: 'HomeLatestWork__Project mb-24 lg:mb-56' }) only %}
+      {% endfor %}
+    </div>
+  </div>
+</div>

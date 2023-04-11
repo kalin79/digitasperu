@@ -1,0 +1,53 @@
+.AppMenu {
+  &__Inner {
+    > :first-child {
+      @apply lg:min-h-0;
+      min-height: calc(100% - theme('height.64'));
+    }
+
+    &::after {
+      content: "";
+      @apply block lg:hidden flex-none w-full h-px bg-black;
+    }
+  }
+  &__Nav {
+    @apply -mx-24 -my-16 lg:-m-12;
+  }
+
+  &__NavItem {
+    @apply flex flex-col items-start;
+  }
+
+  &__NavLink {
+    @apply flex flex-col px-24 py-16 lg:p-12;
+    @apply hover:opacity-60 focus:opacity-60;
+    transition: .15s ease-in-out;
+
+    &::after {
+      content: "";
+      @apply block lg:h-px pointer-events-none;
+      height: theme('borderWidth.2');
+      @apply bg-current;
+      transform-origin: right;
+      transform: scaleX(0);
+      transition: transform .9s cubic-bezier(.19,1,.22,1);
+    }
+
+    &.is-current::after {
+      transform: none;
+    }
+
+    .no-touch &:hover {
+      &::after {
+        transform-origin: left;
+        transform: none;
+      }
+    }
+  }
+
+  &__Cta {
+    .Button__Icon {
+      @apply lg:hidden;
+    }
+  }
+}

@@ -1,0 +1,72 @@
+.HomeNews {
+  --image-placeholder-color: hsl(0, 0%, 94%);
+
+  &:not(:first-child) {
+    @apply -mt-global lg:mt-0;
+  }
+
+  &__Subheading {
+    @screen lg {
+      flex: 1 1 15em;
+      width: 100%;
+      max-width: 25em;
+    }
+  }
+
+  &__Card {
+    transition: opacity 0.4s;
+    @apply mt-40;
+    z-index: 3;
+
+    .CardEntity__Thumbnail {
+      --aspect-ratio: 232/312;
+    }
+  }
+
+  @screen lg {
+    $card-thumbnail-ratio: 504/424;
+
+    &.active-tag &__Card:not(:hover):not(:focus-within), {
+      opacity: 0.3;
+      z-index: 1;
+    }
+    &__BannersContainer {
+      position: absolute;
+      width: 100%;
+      top: 0;
+      height: calc($card-thumbnail-ratio * ((10 * var(--container-column-width) + 9 * var(--container-gutter-width) + var(--container-gutter-width)) / 3 - var(--container-gutter-width)));
+      overflow: hidden;
+      pointer-events: none;
+    }
+    &__Banner {
+      @apply absolute inset-0 z-1 flex items-center;
+      white-space: nowrap;
+      span {
+        @apply inline-flex items-center;
+
+        &:before {
+          content: "";
+          @apply block mx-32;
+          size: 1.25rem;
+          background-image: url('data:image/svg+xml, <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 0C10 0 10.6095 5.10824 12.7506 7.24935C14.8918 9.39047 20 10 20 10C20 10 14.8918 10.6095 12.7506 12.7506C10.6095 14.8918 10 20 10 20C10 20 9.39047 14.8918 7.24936 12.7506C5.10824 10.6095 0 10 0 10C0 10 5.10824 9.39047 7.24936 7.24935C9.39047 5.10824 10 0 10 0Z" fill="white"/></svg>');
+          background-size: 100%;
+        }
+      }
+    }
+    &__List__Content {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      @apply gap-x-gutter;
+    }
+    &__Card {
+      @apply mt-0;
+
+      .CardEntity__Thumbnail {
+        --aspect-ratio: $card-thumbnail-ratio;
+      }
+    }
+    &__Card:nth-child(2n) {
+      @apply mt-104;
+    }
+  }
+}

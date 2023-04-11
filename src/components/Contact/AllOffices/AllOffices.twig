@@ -1,0 +1,137 @@
+{% set tabpanels = '' %}
+
+<div class="AllOffices pb-96 lg:pb-120 bg-global" x-data="Tabs">
+  <div class="container py-80 lg:py-120 bg-black text-white">
+    <div class="col-span-default lg:col-start-3 lg:col-span-8">
+      <div class="AllOffices__Title title-big space-y-8 lg:space-y-16 is-split" x-appear:title>
+        <span class="Line__Wrapper">
+          <span class="Line">
+            {{- title|join('</span></span><span class="Line__Wrapper"><span class="Line">') -}}
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  {% if image %}
+    <div class="AllOffices__Cover container -mt-16 lg:-mt-32 bg-global">
+      <figure class="bg-placeholder" x-appear:image>
+        {% include '@Components/Image/Image.twig' with image only %}
+      </figure>
+    </div>
+  {% endif %}
+
+  <div class="lg:py-120 bg-global">
+    <div x-ref="body" class="container">
+      <div
+        x-ref="scroller"
+        class="AllOffices__Scroller col-span-full lg:col-start-2 lg:col-span-5 border-b border-gray-200 lg:border-b-0 overflow-x-scroll lg:overflow-x-visible scrolling-hidden"
+      >
+        <div class="AllOffices__Regions lg:sticky lg:top-scroll-padding flex py-24 lg:py-0">
+          <div
+            x-ref="tablist"
+            class="flex lg:flex-col -m-8 lg:-m-16 title-small lg:title-medium whitespace-nowrap lg:whitespace-normal"
+            role="tablist"
+            aria-orientation="vertical"
+            aria-label="Regions"
+          >
+            {% for region in regions %}
+              {% set tabId = 'AllOfficesRegion' ~ loop.index %}
+              <button
+                type="button"
+                x-ref="tab"
+                class="AllOffices__Tab p-8 lg:p-16 text-left"
+                role="tab"
+                aria-selected="{{ loop.first ? 'true' : 'false' }}"
+                x-bind:aria-selected="isTabActive('{{ tabId }}')"
+                aria-controls="{{ tabId }}Panel"
+                id="{{ tabId }}"
+                {% if not loop.first %}tabindex="-1"{% endif %}
+                x-bind:tabindex="isTabActive('{{ tabId }}') ? false : -1"
+                x-bind="tabProps"
+                x-on:click="activateTab('{{ tabId }}')"
+                x-on:focus="activateTab('{{ tabId }}')"
+              >
+                <span class="AllOffices__TabLabel">{{ region.title }}</span>
+              </button>
+              {% set tabpanels %}
+                {{ tabpanels }}
+                <div
+                  class="AllOffices__TabPanel"
+                  tabindex="0"
+                  role="tabpanel"
+                  id="{{ tabId }}Panel"
+                  aria-labelledby="{{ tabId }}"
+                  x-bind:hidden="!isTabActive('{{ tabId }}')"
+                >
+                  <ul x-data="Accordions">
+                    {% for office in region.offices %}
+                      {% set accordionId = tabId ~ 'Office' ~ loop.index %}
+                      <li class="AllOffices__OfficeItem Accordions__Item lg:py-32 border-b border-gray-200 lg:border-black lg:border-opacity-30">
+                        <div
+                          class="flex justify-between items-center flex-1 lg:mb-16 py-24 lg:py-0"
+                          x-bind:aria-expanded="isActive({{ loop.index0 }})"
+                          aria-controls="{{ accordionId ~ 'Body' }}"
+                          id="{{ accordionId }}"
+                          x-on:click="toggleItem({{ loop.index0 }})"
+                        >
+                          <span class="flex-1">
+                            <span class="paragraph-big tracking-tight">
+                              {{ office.title }}
+                            </span>
+                          </span>
+                          <span class="lg:hidden">
+                            {% include '@Components/Icon/Icon.twig' with { icon: 'plus' } only %}
+                          </span>
+                        </div>
+                        <div
+                          x-bind:class="{ 'hidden': !isActive({{ loop.index0 }}) }"
+                          class="lg:grid lg:grid-cols-2 lg:gap-x-gutter pb-48 lg:pb-0 space-y-20 lg:space-y-0"
+                          role="region"
+                          aria-labelledby="{{ accordionId }}"
+                          id="{{ accordionId ~ 'Body' }}"
+                        >
+                          <div class="row-span-2">
+                            {{ office.address }}
+                          </div>
+                          <div class="flex flex-col items-start">
+                            {% if office.phone %}
+                              <a href="tel:{{ office.phone }}">{{ office.phone }}</a>
+                            {% endif %}
+                            {% if office.email %}
+                              <a href="mailto:{{ office.email }}">{{ office.email }}</a>
+                            {% endif %}
+                          </div>
+                          <div class="lg:self-end">
+                            {% if office.socials %}
+                              <ul class="inline-flex flex-wrap lg:mt-20 space-x-8 text-24">
+                                {% for name, url in office.socials %}
+                                  {% if url %}
+                                    <li>
+                                      <a href="{{ url }}" target="_blank" rel="nofollow noopener" aria-label="{{ name }}">
+                                        {% include '@Components/Icon/Icon.twig' with { icon: name, attr: 'aria-hidden="true" focusable="false"' } only %}
+                                      </a>
+                                    </li>
+                                  {% endif %}
+                                {% endfor %}
+                              </ul>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              {% endset %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <div class="col-span-default lg:col-start-8 lg:col-span-4">
+        <div class="mt-16 lg:-mt-32">
+          {{ tabpanels }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

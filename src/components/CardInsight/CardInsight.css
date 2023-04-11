@@ -1,0 +1,10 @@
+.CardEntity--insight {
+  .CardEntity__Thumbnail {
+    --aspect-ratio: 488/424;
+  }
+
+  .CardEntity__Body {
+    border-top-width: 2px;
+    @apply border-primary;
+  }
+}

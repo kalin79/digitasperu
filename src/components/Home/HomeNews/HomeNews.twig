@@ -1,0 +1,42 @@
+<div
+  x-data="HomeNews"
+  class="HomeNews py-global bg-black text-white"
+  :class="{ 'active-tag': activeTag }"
+>
+  <div class="HomeNews__Header container">
+    <div class="lg:flex flex-wrap items-end">
+      <h3 class="HomeNews__Title flex-none title-large lg:mr-64" x-appear:title>{{ title }}</h3>
+      {% if subheading %}
+        <div class="HomeNews__Subheading flex-grow-0 flex-shrink flex items-center lg:min-h-96 mt-32 lg:mt-0 subheading-small">{{- subheading -}}</div>
+      {% endif %}
+    </div>
+  </div>
+  <div class="HomeNews__List relative lg:mt-96">
+    <div class="container">
+      <div class="HomeNews__List__Content">
+        {% for item in news %}
+          {% include '@Components/CardBasic/CardBasic.twig' with item|merge({
+            class: 'HomeNews__Card relative',
+            attr: 'x-ref="card" data-tag="' ~ item.tag ~ '" x-bind="cardProps"'
+          }) %}
+        {% endfor %}
+      </div>
+    </div>
+    <div x-cloak class="HomeNews__BannersContainer hidden lg:block">
+      <template x-for="tag in tags" x-bind:key="tag">
+        <div
+          x-ref="banner"
+          class="HomeNews__Banner title-big capitalize"
+          :data-tag="tag"
+          x-show="isTagActive(tag)"
+          x-transition:enter.opacity.duration.800ms
+          x-transition:leave.opacity.duration.0ms
+        >
+          <template x-for="i in 8">
+            <span x-ref="tag" x-text="tag"></span>
+          </template>
+        </div>
+      </template>
+    </div>
+  </div>
+</div>

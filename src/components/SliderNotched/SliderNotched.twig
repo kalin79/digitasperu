@@ -1,0 +1,5 @@
+<div class="SliderNotched select-none {{ class }}" x-data="SliderNotched" x-bind="$listeners" {{ attr }} x-cursor:label.white="{ label: 'drag', backgroundColor: 'black' }">
+  <div class="SliderNotched__Track" x-bind:class="{ 'pointer-events-none': hasMoved }" x-ref="track">
+    {% block slides %}{% endblock %}
+  </div>
+</div>

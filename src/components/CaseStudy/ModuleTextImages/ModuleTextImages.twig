@@ -1,0 +1,28 @@
+<div class="ModuleTextImages CaseModule container" x-data>
+  <div class="col-span-default lg:col-start-2 lg:col-span-3 self-stretch mb-32 lg:mb-0">
+    <div class="ModuleTextImages__Aside sticky top-scroll-padding lg:max-w-3/12">
+      {% if title %}
+        <div class="ModuleTextImages__Title title-small mb-16 lg:mb-10">{{ title }}</div>
+      {% endif %}
+      {% if content %}
+        <div class="ModuleTextImages__Content paragraph-large">
+          {{- content -}}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="col-span-default lg:col-start-6 lg:col-span-6">
+    <div class="ModuleTextImages__Images space-y-32 lg:space-y-global">
+      {% for media in medias %}
+        <figure class="ModuleTextImages__Image bg-placeholder" x-appear:image>
+          {% if media.video %}
+            {% include '@Components/Video/Video.twig' with { src: media.video, poster: media.image ? media.image.src : false, attr: 'autoplay loop muted playsinline disablePictureInPicture' ~ (media.image ? ' aria-hidden="true"' : '') } only %}
+          {% elseif media.image %}
+            {% include '@Components/Image/Image.twig' with media.image only %}
+          {% endif %}
+        </figure>
+      {% endfor %}
+    </div>
+  </div>
+</div>

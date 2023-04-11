@@ -1,0 +1,8 @@
+{% set settings = {
+  config: config|default(1),
+  autoplay: autoplay|default(false)
+} %}
+<div class="color-gradient-container" x-data="ColorGradient({{ settings|json_encode|e('html_attr') }})">
+  <canvas x-ref="glview"></canvas>
+  <div class="tweakpane-container"{% if not tweak %} hidden{% endif %}></div>
+</div>

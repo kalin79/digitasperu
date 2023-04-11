@@ -1,0 +1,23 @@
+{% set tag = tag|default('a') %}
+{% set prop = alpine ? label : 'label' %}
+{% set settings = (alpine ? { prop: prop } : { label: label }) %}
+{% if icon is not defined %}
+  {% set icon = 'arrow-small' %}
+{% endif %}
+
+<{{ tag }}
+  {% if link %} href="{{ link }}"{% endif %}
+  class="Button{% if size == 'small' %} Button--small{% endif %}{% if style == 'solid' %} Button--solid{% endif %}{% if style == 'link' %} Button--link{% endif %} {{ class }}"
+  x-data="Button({{ settings|json_encode|e('html_attr') }})"
+  x-bind="$listeners"
+  {{ attr }}
+>
+  <span class="Button__Inner">
+    {% if icon %}
+      {% include '@Components/Icon/Icon.twig' with { icon: icon, class: 'Button__Icon', attr: 'x-ref="icon" aria-hidden="true" focusable="false"' } only %}
+    {% endif %}
+
+    <span x-ref="label" class="Button__Label" x-text="{{ prop }}">{{ label }}</span>
+    <span x-ref="clone" class="Button__Label Button__Label--clone" aria-hidden="true" x-text="{{ prop }}"></span>
+  </span>
+</{{ tag }}>

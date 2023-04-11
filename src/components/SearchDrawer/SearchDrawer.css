@@ -1,0 +1,28 @@
+.SearchDrawer {
+  &__SearchBar {
+    @apply pt-64 lg:pt-80;
+
+    @media screen and (max-height: theme('screens.md')) and (orientation: landscape) {
+      @apply relative pt-0;
+    }
+  }
+
+  &__Input {
+    appearance: none;
+    @apply focus:outline-none;
+
+    &::placeholder {
+      @apply text-current opacity-30;
+    }
+    &::-webkit-search-cancel-button,
+    &::-webkit-search-decoration {
+      appearance: none;
+    }
+  }
+
+  &__ResultsInner {
+    &.is-pending {
+      @apply opacity-20 pointer-events-none;
+    }
+  }
+}

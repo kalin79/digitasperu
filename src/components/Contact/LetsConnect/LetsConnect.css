@@ -1,0 +1,35 @@
+.LetsConnect {
+  &__Image {
+    @apply relative row-start-1;
+
+    &::before {
+      content: "";
+      @apply block;
+      padding-top: calc(var(--aspect-ratio) * 100%);
+    }
+
+    > * {
+      @apply absolute inset-0;
+    }
+
+    &:nth-child(1) {
+      --aspect-ratio: 744/512;
+      @apply col-start-3 col-span-6;
+      @apply lg:col-start-2 lg:col-span-4;
+    }
+    &:nth-child(2) {
+      --aspect-ratio: 248/248;
+      @apply col-start-1 col-span-3 mt-16;
+      @apply lg:col-start-1 lg:col-span-2 lg:mt-64;
+    }
+    &:nth-child(3) {
+      --aspect-ratio: 248/380;
+      @apply col-start-7 col-span-4 self-end -mb-24;
+      @apply lg:row-start-2 lg:col-start-4 lg:col-span-3 lg:mb-0;
+
+      @screen lg {
+        margin-top: calc(var(--aspect-ratio) * -50%);
+      }
+    }
+  }
+}

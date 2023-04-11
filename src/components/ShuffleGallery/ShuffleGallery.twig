@@ -1,0 +1,52 @@
+{% set settings = {
+  images: images,
+  autoplay: autoplay|default(5)
+} %}
+
+<div
+  class="ShuffleGallery container py-global lg:py-216 text-center {{ background ? 'bg-muted' : 'bg-global' }}"
+  x-data="ShuffleGallery({{ settings|json_encode|e('html_attr') }})"
+>
+  <div class="ShuffleGallery__Title title-big mb-24" x-appear:title>{{ title }}</div>
+  {% if subheading %}
+    <div class="ShuffleGallery__Subheading -mb-8 subheading-small">
+      {{- subheading -}}
+    </div>
+  {% endif %}
+
+  <div
+    x-ref="items"
+    class="ShuffleGallery__Items ShuffleGallery__Items--layout{{ layout|default(1) }} grid grid-cols-2 lg:grid-cols-10 items-start gap-gutter lg:gap-y-0 mt-32 lg:mt-64 cursor-pointer"
+    tabindex="0"
+    role="button"
+    aria-label="Shuffle gallery"
+    x-on:click="next"
+    x-on:mousedown="$event.preventDefault() && next()"
+    x-on:mouseenter="$dispatch('magnetic-cursor:enter')"
+    x-on:mouseleave="$dispatch('magnetic-cursor:leave')"
+    x-on:keydown.enter.prevent="next"
+    x-on:keydown.space.prevent="next"
+  >
+    <template x-for="(image, i) in currentImages" :key="image.id">
+      <div class="ShuffleGallery__Item">
+        <div x-ref="item" class="ShuffleGallery__ImageContainer">
+          <template x-if="!index && i >= itemsToShow">
+            <figure x-ref="image" class="ShuffleGallery__Image bg-placeholder" x-appear:image>
+              <img class="object-cover w-full h-full" :src="image.src" :alt="image.alt" :width="image.width" :height="image.height" loading="lazy">
+            </figure>
+          </template>
+          <template x-if="index || i < itemsToShow">
+            <figure x-ref="image" class="ShuffleGallery__Image bg-placeholder">
+              <img class="object-cover w-full h-full" :src="image.src" :alt="image.alt" :width="image.width" :height="image.height" loading="lazy">
+            </figure>
+          </template>
+        </div>
+      </div>
+    </template>
+
+    {% include '@Components/MagneticCursor/MagneticCursor.twig' with { settings: {
+      icon: 'refresh',
+      withProgress: true
+    } } only %}
+  </div>
+</div>

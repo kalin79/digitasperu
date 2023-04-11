@@ -1,0 +1,14 @@
+.ModuleVideo {
+  &__Embed {
+    iframe {
+      @apply w-full h-full;
+    }
+  }
+
+  .MagneticCursor {
+    --parent-width: calc(10 * var(--container-column-width) + 9 * var(--container-gutter-width));
+    --cursor-x: calc(var(--parent-width) / 2);
+    --cursor-y: calc((var(--parent-width) * 0.5625) / 2);
+    @apply absolute;
+  }
+}

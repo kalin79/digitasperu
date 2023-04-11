@@ -1,0 +1,8 @@
+{% spaceless %}
+<svg class="Icon Icon--{{ icon }} {{ class }}" role="img" {{ attr }}>
+  {% if title %}
+    <title>{{ title }}</title>
+  {% endif %}
+  <use href="/assets/svg/{{ path|default('icons')|trim('/', 'right') }}.svg#{{ icon }}" />
+</svg>
+{% endspaceless %}

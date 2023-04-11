@@ -1,0 +1,5 @@
+<div class="Slider select-none {{ class }}" x-data="Slider({{ settings|json_encode|e('html_attr') }})" x-bind="$listeners" {{ attr }} x-cursor:label="drag" tabindex="0">
+  <div class="Slider__Track" x-bind:class="{ 'pointer-events-none': hasMoved }" x-ref="track">
+    {% block slides %}{% endblock %}
+  </div>
+</div>

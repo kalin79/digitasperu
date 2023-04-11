@@ -1,0 +1,18 @@
+.ArchivesNews {
+  &__Scroller {
+    --scroll-offset-x: calc(var(--container-column-width) + var(--container-gutter-width));
+  }
+
+  &__Years {
+    &::before,
+    &::after {
+      content: "";
+      @apply block lg:hidden h-px flex-none;
+      width: var(--scroll-offset-x);
+    }
+  }
+
+  &__Tab[aria-selected="true"] &__TabLabel {
+    @apply opacity-100;
+  }
+}

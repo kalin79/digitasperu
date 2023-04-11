@@ -1,0 +1,17 @@
+.PageReveal {
+  isolation: isolate;
+
+  &__Background {
+    transform-origin: 0 100%;
+    will-change: transform;
+  }
+
+  svg {
+    size: .9375em 1em;
+    font-size: 5rem;
+  }
+
+  img {
+    filter: invert(1);
+  }
+}

@@ -1,0 +1,115 @@
+<div class="ArchivesJob lg:px-56 bg-global" x-data="ArchivesJob">
+  <div class="ArchivesJob__Header py-24 lg:-mx-56 lg:py-224 bg-black">
+    <div class="container items-baseline filter invert mt-56 lg:mt-0">
+      <div class="ArchivesJob__Heading">
+        <h2 class="title-big mb-24 lg:mb-184" x-appear:title>{{ title }}</h2>
+
+        <div class="relative flex flex-row-reverse lg:flex-row justify-end items-baseline space-x-16 space-x-reverse lg:space-x-16">
+          <div class="ArchivesJob__ActiveFilters flex-1 flex flex-wrap justify-end space-x-8 space-y-8 lg:space-x-16 lg:space-y-16">
+            <template x-for="filter in activeFilters" x-bind:key="`${filter.taxonomy}-${filter.id}`">
+              {% include '@Components/Chip/Chip.twig' with {
+                label: '<span x-text="filter.title"></span>',
+                tag: 'button',
+                attr: 'type="button" aria-label="Remove filter" x-on:click="clearFilter(filter)"',
+                outline: true,
+                dismiss: true
+              } only %}
+            </template>
+          </div>
+
+          {% if filters %}
+            <button type="button" class="inline-flex items-center" x-on:click="openDrawer">
+              <span class="cap-title-small-italic uppercase">Filters</span>
+              {% include '@Components/Icon/Icon.twig' with { icon: 'filters', class: 'ml-10 text-24', attr: 'aria-hidden="true" focusable="false"' } only %}
+            </button>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ArchivesJob__Body pb-96 lg:pb-152 bg-global">
+    <div class="lg:-mx-56 lg:py-88">
+      <div x-ref="body" class="container">
+        <div
+          x-ref="scroller"
+          class="ArchivesJob__Scroller col-span-full lg:col-start-2 lg:col-span-5 border-b border-gray-200 lg:border-b-0 overflow-x-scroll lg:overflow-x-visible scrolling-hidden"
+        >
+          <div class="ArchivesJob__Cities lg:sticky lg:top-scroll-padding flex py-24 lg:py-0">
+            <div
+              x-ref="tablist"
+              class="flex lg:flex-col -m-8 title-small lg:title-medium whitespace-nowrap lg:whitespace-normal"
+              role="tablist"
+              aria-orientation="vertical"
+              aria-label="Cities"
+            >
+              {% for city in cities %}
+                {% set tabId = city.id|e('html_attr') %}
+                <button
+                  type="button"
+                  x-ref="tab"
+                  class="ArchivesJob__Tab p-8 text-left"
+                  role="tab"
+                  aria-selected="{{ loop.first ? 'true' : 'false' }}"
+                  x-bind:aria-selected="isTabActive('{{ tabId }}')"
+                  aria-controls="{{ tabId }}Panel"
+                  id="{{ tabId }}"
+                  {% if not loop.first %}tabindex="-1"{% endif %}
+                  x-bind:tabindex="isTabActive('{{ tabId }}') ? false : -1"
+                  x-bind="tabProps"
+                  x-on:click="activateTab('{{ tabId }}')"
+                  x-on:focus="activateTab('{{ tabId }}')"
+                >
+                  <span class="ArchivesJob__TabLabel">{{ city.title }}</span>
+                </button>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-span-default lg:col-start-7 lg:col-span-5">
+          <ul class="mt-24 lg:-mt-32">
+            {% for job in items %}
+              {% set args = { city: job.city, terms: job.terms } %}
+              <li
+                x-show="isJobVisible({{ args|json_encode|e('html_attr') }})"
+                class="relative py-16 lg:py-24 border-b border-gray-200 lg:border-black lg:border-opacity-30"
+              >
+                <div class="my-8 cap-small lg:text-gray-600">{{ job.date|date('F j, Y') }}</div>
+                <div class="subheading-small lg:title-small">
+                  <a href="{{ job.link }}" class="stretched-link">{{ job.title }}</a>
+                </div>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% if filters %}
+  {% include '@Components/FiltersDrawer/FiltersDrawer.twig' with filters only %}
+
+  {# {% embed '@Components/PageNavbar/PageNavbar.twig' with {} only %}
+    {% block inner %}
+      <div class="flex-1 flex justify-end space-x-20 bg-global lg:bg-transparent">
+        <div class="flex-1 hidden lg:flex flex-row flex-wrap items-start lg:justify-end -ml-8 mt-16 lg:ml-0 lg:-mt-16 space-x-8 space-y-8 lg:space-x-16 lg:space-y-16">
+          <template x-for="filter in $store.filters.activeFilters" :key="`${filter.taxonomy}-${filter.id}`">
+            {% include '@Components/Chip/Chip.twig' with {
+              label: '<span x-text="filter.title"></span>',
+              tag: 'button',
+              attr: 'type="button" x-on:click="$store.filters.clearFilter(filter)"',
+              outline: true,
+              dismiss: true
+            } only %}
+          </template>
+        </div>
+        <button type="button" class="inline-flex items-center" x-on:click="$store.filters.open()">
+          <span class="cap-title-small-italic uppercase">Filters</span>
+          {% include '@Components/Icon/Icon.twig' with { icon: 'filters', class: 'ml-10 text-24', attr: 'aria-hidden="true" focusable="false"' } only %}
+        </button>
+      </div>
+    {% endblock %}
+  {% endembed %} #}
+{% endif %}

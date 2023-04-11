@@ -1,0 +1,7 @@
+@layer utilities {
+  @responsive {
+    .mouse-driven {
+      transform: translate(var(--mouse-x, 0), var(--mouse-y, 0));
+    }
+  }
+}

@@ -1,0 +1,9 @@
+.HeroHome {
+  &__Title {
+    max-width: 9em;
+
+    @screen lg {
+      /* --line-height: calc(104 / 128); */
+    }
+  }
+}

@@ -1,0 +1,39 @@
+[x-cloak] {
+  display: none !important;
+}
+
+[x-appear\:image] {
+  transform: translateZ(0); /* own context */
+
+  &::after {
+    content: "";
+    @apply absolute inset-0 z-1 bg-placeholder pointer-events-none;
+    transform: scaleY(1);
+    transform-origin: 0 0;
+    transition: transform .45s $easeInOutCubic;
+  }
+
+  &.is-visible::after {
+    transform: scaleY(0);
+  }
+}
+
+[x-appear\:title] {
+  &.is-split {
+    @apply flex flex-col;
+  }
+
+  .Line {
+    $overflow-y: calc((1 - var(--line-height, 1)) * 0.5em + 0.08em);
+    $overflow-x: 0.25rem;
+
+    @apply block;
+    padding: $overflow-y $overflow-x;
+    transform-origin: bottom left;
+
+    &__Wrapper {
+      @apply block overflow-hidden;
+      margin: calc($overflow-y * -1) calc($overflow-x * -1);
+    }
+  }
+}

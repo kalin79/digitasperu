@@ -1,0 +1,8 @@
+.TeamSlider {
+  &__Title {
+    b, strong {
+      @apply text-primary;
+      font-weight: inherit;
+    }
+  }
+}

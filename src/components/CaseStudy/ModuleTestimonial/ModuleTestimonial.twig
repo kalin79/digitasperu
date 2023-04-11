@@ -1,0 +1,23 @@
+<div
+  class="ModuleTestimonial CaseModule container{% if background == 'primary' %} bg-primary text-primary-contrast{% elseif background == 'muted' %} bg-muted{% endif %}"
+  x-data="CaseModule"
+  x-bind="$listeners"
+>
+  {% if eyebrow %}
+    <div class="col-start-2 col-span-2">
+      <span class="ModuleTestimonial__Eyebrow eyebrow writing-vertical-upwards">{{ eyebrow }}</span>
+    </div>
+  {% endif %}
+
+  <div class="col-span-8">
+    <figure class="ModuleTestimonial__Quote lg:max-w-8/12">
+      <blockquote class="title-small lg:title-medium">
+        {{- quote -}}
+      </blockquote>
+
+      <figcaption class="ModuleTestimonial__Author mt-16 lg:mt-24">
+        {% include '@Components/Author/Author.twig' with author only %}
+      </figcaption>
+    </figure>
+  </div>
+</div>

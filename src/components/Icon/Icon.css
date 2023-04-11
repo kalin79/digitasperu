@@ -1,0 +1,13 @@
+.Icon {
+  @apply inline-block align-middle pointer-events-none;
+  size: 1em;
+  @apply fill-current;
+
+  &--burger {
+    width: calc(24 / 14 * 1em);
+  }
+
+  &--arrow-medium {
+    width: calc(54 / 40 * 1em);
+  }
+}

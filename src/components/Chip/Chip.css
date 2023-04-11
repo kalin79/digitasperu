@@ -1,0 +1,26 @@
+.Chip {
+  @apply inline-flex items-center align-middle py-8 px-16 text-center;
+  @apply text-12 rounded bg-white text-black truncate overflow-ellipsis;
+
+  &--outline {
+    background: none;
+    box-shadow: inset 0 0 0 1px currentColor;
+  }
+
+  &__Label {
+    @apply font-sans font-roman italic;
+  }
+}
+
+a,
+button {
+  &.Chip:hover {
+    @apply bg-transparent;
+    box-shadow: inset 0 0 0 1px currentColor;
+  }
+
+  &.Chip--outline:hover {
+    @apply bg-black text-white;
+    box-shadow: none;
+  }
+}

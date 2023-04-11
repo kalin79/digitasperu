@@ -1,0 +1,1 @@
+import './ModuleImageFull.css'

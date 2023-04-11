@@ -1,0 +1,172 @@
+$circle-size: var(--circle-size-default);
+
+.Awards {
+  grid-template-rows: auto 1fr;
+
+  &__Title {
+    $unitsPerEm: 1000;
+    $x-height: 468;
+    $cap-height: 708;
+    $hheaAscender: 756;
+    $hheaDescender: -244;
+    $baseline: calc(($unitsPerEm - $hheaAscender - $hheaDescender) / (2 * $unitsPerEm));
+    @apply -m-4 p-4;
+    margin-left: calc($baseline * -1em - theme('margin.4'));
+    @apply font-sans font-roman text-96 tracking-tightest leading-none;
+    @apply bg-gradient-to-t from-primary to-secondary;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    @screen lg {
+      $title-ratio: calc(685 / 232);
+      margin-left: calc(($cap-height - $unitsPerEm) / $unitsPerEm * 1em - theme('margin.4'));
+      font-size: min(calc((100vh - 2 * var(--scroll-offset-y)) / $title-ratio), calc(var(--container-column-width) / ($x-height / $unitsPerEm)));
+    }
+  }
+
+  &__Container {
+    @apply px-0;
+  }
+
+  &__List {
+    --circle-size-default: 378; /* px */
+    --circle-size: calc(5 * var(--container-column-width) + 4 * var(--container-gutter-width)); /* 152px */
+    --gutter-width: var(--container-gutter-width);
+    --vertical-offset: 77; /* px */
+    @apply flex flex-wrap justify-start items-start lg:w-full lg:max-w-8/12 pointer-events-none;
+    width: calc(10 * var(--container-column-width) + 9 * var(--container-gutter-width) + var(--gutter-width));
+    margin: calc(var(--gutter-width) / -2) *;
+
+    @screen lg {
+      --circle-size: calc(3 * var(--container-column-width) + 2 * var(--container-gutter-width)); /* 378px */
+      --gutter-width: theme('spacing.40');
+      margin-left: calc(var(--gutter-width) * -1);
+    }
+
+    &::before {
+      content: "";
+      @apply block;
+      width: calc(var(--circle-size) + var(--gutter-width));
+
+      @screen lg {
+        max-width: calc(3 * var(--container-column-max-width) + 2 * var(--container-gutter-width) + var(--gutter-width));
+        margin-right: calc(-0.225 * var(--gutter-width));
+      }
+    }
+  }
+
+  &__Item {
+    $vertical-offset: calc(var(--vertical-offset) / $circle-size * 100%);
+    padding: calc(var(--gutter-width) / 2);
+
+    &:nth-child(even) {
+      .Award__Container {
+        margin-top: calc(-50% - var(--gutter-width) / 2);
+      }
+    }
+
+    @screen lg {
+      &:nth-child(odd) {
+        .Award__Container {
+          margin-top: $vertical-offset;
+          margin-bottom: calc($vertical-offset * -1);
+        }
+      }
+      &:nth-child(even) {
+        .Award__Container {
+          margin-top: calc(-0.6 * var(--gutter-width));
+          margin-right: calc(-0.225 * var(--gutter-width));
+        }
+      }
+      &:nth-child(6n+2),
+      &:nth-child(6n+3) {
+        .Award__Container {
+          margin-left: calc(141 / $circle-size * 100%); /* 143px = horizontal offset */
+        }
+      }
+      &:nth-child(6n+2) {
+        .Award__Container {
+          margin-right: calc(-0.25 * var(--gutter-width));
+        }
+      }
+      &:nth-child(6n+3),
+      &:nth-child(6n+5) {
+        .Award__Container {
+          margin-top: calc($vertical-offset - 0.6 * var(--gutter-width));
+        }
+      }
+      &:nth-child(6n+4),
+      &:nth-child(6n+5) {
+        .Award__Container {
+          margin-left: calc(299 / $circle-size * 100%); /* 301 = horizontal offset */
+        }
+      }
+      &:nth-child(6n+4) {
+        .Award__Container {
+          margin-right: -1.6875rem;
+          margin-bottom: calc($vertical-offset * -1 - 0.8 * var(--gutter-width));
+        }
+      }
+      &:nth-child(6n+5) {
+        .Award__Container {
+          margin-bottom: -100%;
+        }
+      }
+      &:nth-child(6n+6) {
+        .Award__Container {
+          margin-top: 0;
+        }
+      }
+      &:first-child {
+        .Award__Container {
+          margin-top: 0;
+        }
+      }
+      &:last-child {
+        .Award__Container {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+.Award {
+  @apply flex flex-col items-center pointer-events-auto;
+
+  &__Container {
+    width: var(--circle-size);
+    @apply lg:max-w-3/12;
+  }
+
+  &__Logo {
+    @apply my-auto lg:my-24;
+  }
+
+  &::before {
+    @screen lg {
+      content: "";
+    }
+  }
+
+  &::before,
+  &__Description {
+    @screen lg {
+      flex: 1 1 100%;
+    }
+  }
+
+  &__Description {
+    @apply absolute inset-0 flex items-center justify-center opacity-0 invisible;
+    @apply lg:static lg:items-start lg:opacity-100 lg:visible;
+  }
+
+  &:hover {
+    .Award__Logo {
+      @apply opacity-0 lg:opacity-100;
+    }
+    .Award__Description {
+      @apply opacity-100 visible;
+    }
+  }
+}

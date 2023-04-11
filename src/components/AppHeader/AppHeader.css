@@ -1,0 +1,183 @@
+$slideInTransition: transform 1s cubic-bezier(.14,1,.34,1);
+
+.AppHeader {
+  &__Navbar {
+    @apply absolute z-header top-0 inset-x-0 lg:top-24;
+    @apply text-black;
+
+    &.is-dark {
+      --invert: 1;
+      @apply text-white;
+    }
+
+    &--fixed {
+      @apply fixed lg:top-0 pointer-events-auto;
+      @apply border-b-2 border-transparent;
+      transform: translate3d(0,-100%,0);
+      transition: $slideInTransition;
+
+      .AppHeader.is-visible & {
+        transform: none;
+      }
+
+      .AppMenu {
+        @apply hidden lg:block;
+      }
+    }
+  }
+
+  &__Background {
+    @apply h-64 lg:h-72 border-b-2 border-transparent;
+    box-sizing: content-box;
+    transform: translate3d(0,-100%,0);
+    transition: $slideInTransition;
+
+    .AppHeader.is-visible & {
+      transform: none;
+    }
+
+    &::before,
+    &::after,
+    &__Progress {
+      content: "";
+      @apply absolute top-full inset-x-0;
+      height: theme('borderWidth.2');
+    }
+    &::after,
+    &__Progress {
+      transform-origin: 0 0;
+    }
+    &::after {
+      @apply bg-gradient-to-l from-primary to-secondary;
+    }
+
+    &--withProgress {
+      &::before {
+        @apply bg-primary opacity-20;
+      }
+      &::after {
+        @apply hidden;
+      }
+    }
+  }
+
+
+  &__Brand {
+    filter: invert(var(--invert, 0));
+    @apply hover:opacity-60 focus:opacity-60;
+    transition: opacity .15s ease-in-out;
+
+    @media screen and (max-height: theme('screens.md')) and (orientation: landscape) {
+      .AppHeader.is-search-open & {
+        @apply opacity-0 invisible;
+      }
+    }
+  }
+
+  &__Menu {
+    .AppHeader__Navbar--fixed & {
+      @apply overflow-hidden lg:-mr-56 lg:pr-56;
+    }
+  }
+
+  &__PageTitle {
+    @apply row-start-1 col-start-1 pr-24 truncate overflow-ellipsis;
+    /* @apply font-heavy tracking-widest uppercase; */
+    @apply text-14 font-medium;
+    line-height: theme('height.64');
+
+    .AppHeader__Navbar--fixed & {
+      @apply block;
+    }
+
+    /* @plumber {
+      font-size: 1.5;
+      line-height: 2;
+      leading-top: 1.333;
+    } */
+
+    /* transform: translate3d(0,calc(min(0, var(--scroll-direction, 1)) * -100%),0);
+    transition: transform .15s ease-in-out; */
+
+    @screen lg {
+      @apply text-16;
+      line-height: theme('height.72');
+    }
+  }
+
+  &__MenuInner {
+    .AppHeader__Navbar--fixed & {
+      /* transform: translate3d(0,calc(max(0, var(--scroll-direction, 1)) * -100%),0);
+      transition: transform .15s ease-in-out; */
+    }
+  }
+
+  &__SearchButton.RoundButton {
+    --RoundButton-color: transparent;
+    --RoundButton-bg: currentColor;
+    filter: none;
+
+    @screen lg {
+      --RoundButton-color: theme('backgroundColor.black');
+      --RoundButton-bg: theme('textColor.white');
+      filter: invert(var(--invert, 0));
+
+      .no-touch &:focus,
+      .no-touch &:hover {
+        filter: invert(calc(1 - var(--invert, 0)));
+      }
+    }
+
+    &.is-active {
+      --RoundButton-color: theme('backgroundColor.black');
+      --RoundButton-bg: theme('textColor.white');
+      filter: invert(var(--invert, 0));
+    }
+
+    .Icon--plus {
+      font-size: 1.5rem;
+      transform: rotate(45deg);
+    }
+  }
+
+  &__Toggler {
+    @apply inline-block lg:hidden;
+  }
+
+  &__TogglerInner {
+    @apply grid place-items-center h-full;
+
+    > * {
+      @apply row-start-1 col-start-1;
+    }
+
+    .Icon--burger {
+      font-size: .875rem;
+    }
+
+    .Icon--close {
+      @apply relative;
+      font-size: 1.25rem;
+      transform: rotate(45deg);
+
+      &::before,
+      &::after {
+        content: "";
+        @apply absolute inset-0 m-auto bg-current;
+        size: 1em 2px;
+      }
+      &::after {
+        transform: rotate(90deg);
+      }
+    }
+  }
+}
+
+.AppMenu__Wrapper {
+  @apply text-black;
+
+  &.is-dark {
+    --invert: 1;
+    @apply text-white;
+  }
+}

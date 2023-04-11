@@ -1,0 +1,39 @@
+<div class="PageNotFound relative container items-center h-screen py-80 lg:py-120 bg-global select-none" x-data="PageNotFound">
+  <div x-ref="contents" class="PageNotFound__Heading lg:grid items-center lg:max-w-10/12 lg:mx-auto text-center lg:text-left is-split" x-appear:title="$store.app.isReady">
+    <h2 class="lg:contents lg:whitespace-nowrap">
+      {% for line in title %}
+        <span class="PageNotFound__Title title-big">
+          <span class="Line__Wrapper">
+            <span class="Line">
+              {{- line -}}
+            </span>
+          </span>
+        </span>
+      {% endfor %}
+    </h2>
+
+    {% if subheading %}
+      <div class="mt-24 lg:mt-0 lg:mx-48">
+        {{- subheading -}}
+      </div>
+    {% endif %}
+
+    {% if cta %}
+      <div class="mt-48 lg:mt-0">
+        {% include '@Components/Button/Button.twig' with cta only %}
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="PageNotFound__Images col-span-full absolute z-0 inset-0 -mx-container overflow-hidden pointer-events-none">
+    {% for image in images %}
+      <div
+        x-ref="image"
+        class="PageNotFound__Image absolute z-0 top-0 left-0 pointer-events-auto cursor-grab"
+        x-bind="imageProps"
+      >
+        {% include '@Components/Image/Image.twig' with image|merge({ class: 'pointer-events-none' }) only %}
+      </div>
+    {% endfor %}
+  </div>
+</div>

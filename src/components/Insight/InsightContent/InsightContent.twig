@@ -1,0 +1,66 @@
+<div class="InsightContent relative bg-global" x-data="InsightContent">
+  <div class="container py-40 lg:pt-56 lg:pb-120">
+    {% if tags %}
+      <div class="col-span-default lg:row-start-1 lg:col-start-2 lg:col-span-2 mb-40">
+        <ul class="InsightContent__Tags flex flex-wrap lg:flex-col -m-4 lg:my-0">
+          {% for tag in tags %}
+            <li class="m-4">
+              {% set settings = {
+                label: tag.title,
+                outline: true
+              } %}
+              {% if tag.link %}
+                {% set settings = settings|merge({
+                  tag: 'a',
+                  attr: 'href="' ~ tag.link ~ '"'
+                }) %}
+              {% endif %}
+              {% include '@Components/Chip/Chip.twig' with settings only %}
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    <div class="InsightContent__Body col-span-default lg:row-start-1 lg:col-start-3 lg:col-span-8 lg:w-full lg:max-w-8/12 mx-auto">
+      <p>Since March, usage of social media — including social networking sites and user-generated streaming platforms, like YouTube — has spiked, presenting both an opportunity and a challenge for brands. According to GlobalWebIndex, 40% of users 16 years old to 64 years old worldwide are spending more time on social media.</p>
+      <p>Life is turbulent right now, with concern around politics, human-rights issues, and the ongoing pandemic. People are living in a period of uncertainty, and this is reflected through their comments and behavior online.</p>
+      <blockquote class="title-small lg:title-medium">
+        <p>People are living in a period of uncertainty, and this is reflected through their comments and behavior online.</p>
+      </blockquote>
+      <p>So how can marketers ensure their social media strategies are capitalizing on this increased use, while navigating negative sentiment and future unpredictability? Here are three tips.</p>
+      <div class="mt-48 mb-16 text-18 lg:text-20 leading-24"><strong>1. Strive for brand resonance, not clout</strong></div>
+      <p>This year, there’s been significant demand for brands to use their platforms for good. Companies that have stayed silent in the wake of human rights and political conversations have experienced social-media backlash, with audiences citing that they no longer see themselves in these brands.</p>
+      <p>Your brand needs to stand for something. And you should use your platforms to elevate that point-of-view. However, if you haven’t put in the work, or actively been part of the discussion, do not clout-chase on social media. People don’t want brands forcing their way into conversations where they don’t belong. Participation in trending topics can come off as forced and opportunistic, a transparent grab for false relevancy. Strive for brand resonance with your audience, or the audience you’re trying to attract.</p>
+      <figure class="bg-placeholder" x-appear:image>
+        {% include '@Components/Image/Image.twig' with { class: false, src: 'https://source.unsplash.com/random/1040x592', alt: '', width: 1040, height: 592 } only %}
+      </figure>
+      <p>Finding the balance can be tricky, which is why it’s important to stick to your content strategy and brand values. Diversification of platform, content and ad-types can build brand love and get your message across without detracting comments. To avoid potentially controversial narratives, double down on more discovery-driven platforms where the conversation is personalized. On comment-driven channels, consider switching up your formats and running pre-roll, bumper ads, stories, and polls.</p>
+      <blockquote class="title-small lg:title-medium">
+        <p>People don’t want brands forcing their way into conversations where they don’t belong.</p>
+      </blockquote>
+      <div class="mt-48 mb-16 text-18 lg:text-20 leading-24"><strong>2. Monitor the cultural climate</strong></div>
+      <figure class="float-left bg-placeholder" x-appear:image>
+        {% include '@Components/Image/Image.twig' with { class: false, src: 'https://source.unsplash.com/random/356x520', alt: '', width: 356, height: 520 } only %}
+      </figure>
+      <p>Before posting, always check what's happening on your platform of choice. Evaluate your message for cultural sensitivity, placement, and brand safety. Will your message feel insensitive or unwelcome? Or, alternatively, is there a chance to scale based on interest and resonance? This is especially true for paid social. Set up daily stand-ups to understand the cultural climate and how your content might be perceived.<br>
+      Additionally, look for opportunities where your brand can add value to the community. For example, Sephora is sharing gratitude and self-care reminders. Bank of America posts “Better Money Habits” and financial literacy tips. Consider creating a list of safe topics that will be well-received, like philanthropic endeavors, gift guides, and holiday content.</p>
+      <div class="mt-48 mb-16 text-18 lg:text-20 leading-24"><strong>3. Have a backup plan</strong></div>
+      <p>During these times of uncertainty, be ready to resolve, pause, or shift directions based on reactions to your content. Take steps to increase your community management efforts, double down on moderation, and arm your team with a bank of responses.</p>
+      <p>Of course, the level of comfort with negative commentary depends on the brand. At Digitas, our rule of thumb is this: When more than 20% of comments are off-topic or hostile, it's time to pivot and introduce a new creative message. Take the time to audit the content that elicited these responses; this information can help guide future topics, and occasionally provide unique insights into your audience.<br>
+      This year, there’s been significant demand for brands to use their platforms for good. Companies that have stayed silent in the wake of human rights and political .</p>
+      <div class="mt-48 mb-16 text-18 lg:text-20 leading-24"><strong>At the end of the day, put people first</strong></div>
+      <p>No matter what you post, it’s important to remember that social communities are made up of real people, expressing real opinions, grief, happiness, joy, anxiety, and uncertainty. The most important lens to review your content through these days is a human one.</p>
+    </div>
+  </div>
+
+  {% if audio %}
+    <div
+      x-ref="audio"
+      class="InsightContent__Audio absolute inset-x-0 bottom-0 -top-40 flex justify-end items-start px-24 lg:px-56 pointer-events-none"
+      x-on:focusin="onAudioFocus"
+    >
+      {% include '@Components/AudioPlayer/AudioPlayer.twig' with { src: audio } only %}
+    </div>
+  {% endif %}
+</div>

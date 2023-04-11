@@ -1,0 +1,59 @@
+.AllOffices {
+  &__Title {
+    @apply flex flex-col;
+
+    > :nth-child(even) {
+      @apply self-end;
+    }
+
+    b, strong {
+      @apply bg-gradient-to-l from-primary to-secondary;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: inherit;
+    }
+  }
+
+  &__Cover {
+    --image-placeholder-color: hsl(0, 0%, 5%);
+    @apply relative z-0;
+
+    &::before {
+      content: "";
+      @apply absolute -z-1 top-0 inset-x-0 lg:h-1/2 bg-black;
+      height: calc(8 / 21 * 100%);
+    }
+  }
+
+  &__Scroller {
+    --scroll-offset-x: calc(var(--container-column-width) + var(--container-gutter-width));
+  }
+
+  &__Regions {
+    &::before,
+    &::after {
+      content: "";
+      @apply block lg:hidden h-px flex-none;
+      width: var(--scroll-offset-x);
+    }
+  }
+
+  &__Tab[aria-selected="true"] &__TabLabel {
+    @apply bg-gradient-to-l from-primary to-secondary;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  &__TabPanel {
+    .touch &:focus {
+      @apply outline-none;
+    }
+  }
+
+  &__OfficeItem {
+    a {
+      @apply hover:opacity-60 focus:opacity-60;
+      transition: .15s ease-in-out;
+    }
+  }
+}

@@ -1,0 +1,19 @@
+<div
+  class="ModuleText CaseModule container{% if background == 'primary' %} bg-primary text-primary-contrast{% elseif background == 'muted' %} bg-muted{% endif %}"
+  x-data="CaseModule"
+  x-bind="$listeners"
+>
+  {% if title %}
+    <div class="ModuleText__Title col-span-default lg:col-start-2 lg:col-span-4 mb-32">
+      <div class="lg:max-w-3/12 title-small">{{ title }}</div>
+    </div>
+  {% endif %}
+
+  {% if content %}
+    <div class="ModuleText__Content col-span-default lg:col-start-7 lg:col-span-5">
+      <div class="lg:max-w-4/12 paragraph-large">
+        {{- content -}}
+      </div>
+    </div>
+  {% endif %}
+</div>

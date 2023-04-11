@@ -1,0 +1,14 @@
+.ModuleTwoImages {
+  &__Image {
+    @apply relative z-0;
+
+    &:first-child {
+      &::before {
+        content: "";
+        @apply absolute top-1/2 left-1/2 -z-1 lg:hidden w-screen h-full;
+        @apply bg-global;
+        margin-left: calc(-50 * var(--vw, 1vw));
+      }
+    }
+  }
+}

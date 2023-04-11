@@ -1,0 +1,13 @@
+.Hero {
+  min-height: min(35.875rem, calc(574 / 667 * 100vh)); /* 574px */
+
+  @screen lg {
+    height: calc(744 / 1600 * (100 * var(--vw, 1vw)));
+    min-height: 46.5rem; /* 744px */
+    max-height: 100vh;
+  }
+
+  &__Content {
+    @apply filter invert;
+  }
+}

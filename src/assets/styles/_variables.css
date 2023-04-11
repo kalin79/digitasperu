@@ -1,0 +1,9 @@
+@import "./variables/_easings.css";
+
+$mockup-width: 1600; /* px */
+$mockup-height: 880; /* px */
+
+$header-height-mobile: theme('height.64');
+$header-height-desktop: theme('height.72');
+
+$transition-default: .15s ease-in-out;

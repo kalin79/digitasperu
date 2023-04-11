@@ -1,0 +1,100 @@
+.ArchivesInsight {
+  $title-lines-offset: theme('margin.128');
+
+  &__Heading {
+    @screen lg {
+      grid-template-columns: minmax(0, max-content) minmax(max-content, 1fr) auto;
+
+      &[x-appear\:title].is-split {
+        @apply grid;
+      }
+    }
+  }
+
+  &__Title {
+    @screen lg {
+      &:first-of-type {
+        @apply w-full -mb-16;
+      }
+
+      &:last-of-type {
+        @apply order-last;
+        margin-left: calc($title-lines-offset * -1);
+      }
+    }
+  }
+
+  &__Subheading {
+    @screen lg {
+      @apply col-start-1;
+      max-width: 28.5rem;
+      margin-right: calc($title-lines-offset + theme('margin.32'));
+    }
+  }
+
+  &__ActiveFilters {
+    @screen lg {
+      min-height: calc(2 * (theme('height.32') + theme('spacing.16')));
+    }
+  }
+
+  &__Column {
+    &:only-of-type {
+      .CardEntity {
+        &:nth-of-type(6n+1),
+        &:nth-of-type(6n+6) {
+          .CardEntity__Thumbnail {
+            --aspect-ratio: 568/424;
+          }
+        }
+        &:nth-of-type(6n+3) {
+          .CardEntity__Thumbnail {
+            --aspect-ratio: 528/424;
+          }
+        }
+        &:nth-of-type(6n+4) {
+          .CardEntity__Thumbnail {
+            --aspect-ratio: 448/424;
+          }
+        }
+      }
+    }
+
+    &:not(:only-of-type) {
+      &:nth-of-type(1) {
+        .CardEntity {
+          &:nth-of-type(odd) {
+            .CardEntity__Thumbnail {
+              --aspect-ratio: 568/424;
+            }
+          }
+          .&:nth-of-type(even) {
+            .CardEntity__Thumbnail {
+              --aspect-ratio: 448/424;
+            }
+          }
+        }
+      }
+      &:nth-of-type(3) {
+        .CardEntity {
+          &:nth-of-type(odd) {
+            .CardEntity__Thumbnail {
+              --aspect-ratio: 528/424;
+            }
+          }
+          .&:nth-of-type(even) {
+            .CardEntity__Thumbnail {
+              --aspect-ratio: 568/424;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &__BackToTopButton {
+    .Button__Icon {
+      transform: rotate(-90deg);
+    }
+  }
+}

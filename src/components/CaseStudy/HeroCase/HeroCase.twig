@@ -1,0 +1,18 @@
+<header class="HeroCase relative z-1 pb-40 lg:pb-88 bg-global">
+  <figure class="HeroCase__Cover mb-32 lg:mb-56 bg-placeholder">
+    {% if video %}
+      {% include '@Components/Video/Video.twig' with { src: video, poster: image ? image.src : false, attr: 'autoplay loop muted playsinline disablePictureInPicture' ~ (image ? ' aria-hidden="true"' : '') } only %}
+    {% elseif image %}
+      {% include '@Components/Image/Image.twig' with image only %}
+    {% endif %}
+  </figure>
+
+  <div class="HeroCase__Header container">
+    {% if eyebrow %}
+      <span class="HeroCase__Eyebrow eyebrow mb-20 lg:mb-48">{{ eyebrow }}</span>
+    {% endif %}
+    <h1 class="HeroCase__Title title-big" x-appear:title="$store.app.isReady">{{ title }}</h1>
+  </div>
+</header>
+
+{% embed '@Components/PageNavbar/PageNavbar.twig' with { shareText: title } only %}{% endembed %}

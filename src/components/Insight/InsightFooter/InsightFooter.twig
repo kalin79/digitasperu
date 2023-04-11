@@ -1,0 +1,14 @@
+<div class="InsightFooter container pb-global bg-global">
+  <div class="flex items-center pt-24 lg:pb-120 border-t border-gray-200">
+    {% if authors %}
+      <ul class="flex flex-wrap flex-1 -my-8 -mx-12">
+        {% for author in authors %}
+          <li class="py-8 px-12">
+            {% include '@Components/Author/Author.twig' with author only %}
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    {% include '@Components/Share/Share.twig' with { class: 'hidden lg:block ml-auto', uniqid: 'InsightFooter' } only %}
+  </div>
+</div>

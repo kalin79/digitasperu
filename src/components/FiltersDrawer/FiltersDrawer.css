@@ -1,0 +1,111 @@
+.FiltersDrawer {
+  grid-template-rows: theme('height.screen');
+
+  &__Close {
+    @screen lg {
+      --cursor-x: calc(var(--container-margin) + 5 * (var(--container-column-width) + var(--container-gutter-width)));
+      --cursor-y: theme('inset.104');
+    }
+  }
+
+  &__CloseButton {
+    --RoundButton-bg: theme('backgroundColor.green.contrast');
+    --RoundButton-color: theme('textColor.black');
+    @apply w-80 h-80 -mt-40 lg:-ml-40;
+    font-size: .75rem;
+  }
+}
+
+.Filter {
+  $checkbox-size: 8px;
+  $checkbox-ring-width: 1px;
+  $checkbox-ring-offset: 2px;
+  $checkbox-margin: theme('margin.8');
+  $checkbox-offset-y: theme('inset.8');
+  $checkbox-focus-size: calc($checkbox-size + 2 * ($checkbox-ring-width + $checkbox-ring-offset));
+  $checkbox-total-width: calc($checkbox-focus-size + $checkbox-margin);
+
+  &__Terms {
+    margin-left: calc($checkbox-total-width * -1);
+    margin-right: $checkbox-total-width;
+    column-count: 2;
+    column-gap: var(--container-gutter-width);
+  }
+
+  &__Term {
+    @apply relative pr-16;
+
+    &__Input {
+      appearance: none;
+      @apply absolute;
+      top: $checkbox-offset-y;
+      left: calc($checkbox-ring-width + $checkbox-ring-offset);
+      size: $checkbox-size;
+      margin-right: $checkbox-margin;
+      @apply rounded-full bg-green-light focus:outline-none;
+      transform: scale(0);
+
+      .no-touch & {
+        transition: transform .2s ease;
+      }
+
+      &:checked {
+        transform: none;
+      }
+    }
+
+    &__Label {
+      @apply inline-block;
+      padding-left: $checkbox-total-width;
+
+      &::after {
+        content: "";
+        @apply absolute left-0;
+        top: calc($checkbox-offset-y - ($checkbox-ring-width + $checkbox-ring-offset));
+        size: $checkbox-focus-size;
+        @apply rounded-full opacity-0;
+        box-shadow: inset 0 0 0 $checkbox-ring-width currentColor;
+      }
+    }
+
+    &__Input,
+    &__Label {
+      @apply cursor-pointer;
+    }
+
+    &__Input:checked + &__Label,
+    &__Input:focus + &__Label {
+      @apply text-green-light;
+    }
+
+    &__Input:focus + &__Label::after {
+      @apply opacity-100;
+    }
+
+    .no-touch &__Label {
+      transition: color .2s ease;
+
+      &:hover {
+        @apply text-green-light;
+
+        &::after {
+          @apply opacity-100;
+        }
+      }
+    }
+
+    &__Thumbnail {
+      @apply hidden lg:block fixed z-cursor left-32 -top-56 w-112 h-112;
+      @apply opacity-0 invisible rounded-full overflow-hidden pointer-events-none;
+      transition: opacity .2s ease, visibility .2s ease;
+
+      img {
+        @apply rounded-full;
+      }
+    }
+
+    &__Label:hover + &__Thumbnail {
+      @apply opacity-100 visible;
+    }
+  }
+}

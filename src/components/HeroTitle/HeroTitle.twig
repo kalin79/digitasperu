@@ -1,0 +1,16 @@
+{% embed '@Components/Hero/Hero.twig' with { class: 'HeroTitle text-center' } %}
+  {% block content %}
+    <div class="lg:max-w-8/12 self-center flex flex-col items-center mx-auto lg:mt-20 text-center">
+      <h1 class="HeroTitle__Title title-medium" x-appear:title="$store.app.isReady">{{ title }}</h1>
+      {% if desc %}
+        <div class="mt-32 eyebrow">
+          {{- desc -}}
+        </div>
+      {% endif %}
+    </div>
+
+    {# <div class="absolute bottom-40 inset-x-0 overflow-hidden">
+      {% include '@Components/ScrollHint/ScrollHint.twig' with {} only %}
+    </div> #}
+  {% endblock %}
+{% endembed %}

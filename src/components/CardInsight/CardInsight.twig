@@ -1,0 +1,73 @@
+{% set color = categories and categories[0].color ? categories[0].color : null %}
+{% set contrastColor = categories and categories[0].contrastColor ? categories[0].contrastColor : null %}
+<article
+  class="CardEntity CardEntity--insight relative w-full {{ class }}"
+  {% if alpine %}
+    :style="`--primary-color:${entity.color}`"
+  {% elseif color %}
+    style="--primary-color:{{ color }}"
+    data-color="{{ color }}"
+    {% if contrastColor %}
+      data-contrast-color="{{ contrastColor }}"
+    {% endif %}
+  {% endif %}
+  {{ attr }}
+>
+  <div class="CardEntity__Thumbnail relative{% if size and size != 'default' %} CardEntity__Thumbnail--{{ size }}{% endif %} bg-placeholder" x-appear:image>
+    {% if alpine %}
+      <figure class="absolute inset-0" x-html="entity.thumbnail"></figure>
+    {% elseif thumbnail %}
+      {% include '@Components/Image/Image.twig' with { class: 'absolute object-cover w-full h-full' }|merge(thumbnail) only %}
+    {% endif %}
+
+    {% if date or alpine %}
+      <div class="CardEntity__Metas p-24 relative">
+        {% include '@Components/Chip/Chip.twig' with { label: '<span %s x-text="entity.date">%s</span>'|format(not alpine ? 'x-ignore' : '', date|date('F j, Y')) } only %}
+      </div>
+    {% endif %}
+  </div>
+  <div class="CardEntity__Body pt-16">
+    {% if authors or alpine %}
+      {% set names = [] %}
+      {% for author in authors %}
+        {% set names = names|merge([author.name]) %}
+      {% endfor %}
+      <div class="CardEntity__Eyebrow eyebrow mb-16"{% if not alpine %} x-ignore{% endif %} x-text="entity.authors">{{ names|join(' & ') }}</div>
+    {% endif %}
+    <div class="CardEntity__Title title-small">
+      {%- if link or alpine -%}
+        {% if alpine %}
+          <template x-if="entity.link">
+        {% endif %}
+        <a
+          href="{{ link }}"
+          class="stretched-link"
+          {% if alpine %}
+            :href="entity.link"
+            x-bind:tabindex="entity.tabindex"
+            x-cursor:label="{ backgroundColor: entity.color, iconColor: entity.contrastColor, label: 'view' }"
+          {% else %}
+            {% set cursorSettings = { label: 'view' } %}
+            {% if contrastColor %}
+              {% set cursorSettings = cursorSettings|merge({ iconColor: contrastColor }) %}
+            {% endif %}
+            {% if color %}
+              {% set cursorSettings = cursorSettings|merge({ backgroundColor: color }) %}
+            {% endif %}
+            x-cursor:label="{{ cursorSettings|json_encode|e('html_attr') }}"
+          {% endif %}
+        >
+          <span{% if not alpine %} x-ignore{% endif %} x-text="entity.title">{{ title }}</span>
+        </a>
+        {% if alpine %}
+          </template>
+          <template x-if="!entity.link">
+            <span x-text="entity.title"></span>
+          </template>
+        {% endif %}
+      {%- else -%}
+        <span x-ignore x-text="entity.title">{{ title }}</span>
+      {%- endif -%}
+    </div>
+  </div>
+</article>

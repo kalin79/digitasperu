@@ -1,0 +1,9 @@
+<div class="ModuleImageFull CaseModule" x-data>
+  <figure class="ModuleImageFull__Image bg-placeholder" x-appear:image>
+    {% if video %}
+      {% include '@Components/Video/Video.twig' with { src: video, poster: image ? image.src : false, attr: 'autoplay loop muted playsinline disablePictureInPicture' ~ (image ? ' aria-hidden="true"' : '') } only %}
+    {% elseif image %}
+      {% include '@Components/Image/Image.twig' with image only %}
+    {% endif %}
+  </figure>
+</div>

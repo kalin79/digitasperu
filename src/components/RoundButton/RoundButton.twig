@@ -1,0 +1,5 @@
+<button type="button" class="RoundButton{% if invert %} RoundButton--invert{% endif %}{% if outline %} RoundButton--outline{% endif %} w-40 h-40 {{ class }}"{% if label %} aria-label="{{ label|e('html_attr') }}"{% endif %} {{ attr }}>
+  <span class="RoundButton__Inner">
+    {% include '@Components/Icon/Icon.twig' with { icon: icon, class: 'RoundButton__Icon', attr: 'aria-hidden="true" focusable="false"' } only %}
+  </span>
+</button>

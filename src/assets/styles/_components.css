@@ -1,0 +1,5 @@
+@import "tailwindcss/components.css";
+
+@import "./components/_Accordions.css";
+@import "./components/_CardEntity.css";
+@import "./components/_CaseModule.css";

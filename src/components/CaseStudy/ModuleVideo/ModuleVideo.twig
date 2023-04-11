@@ -1,0 +1,29 @@
+{% set settings = {
+  embed: embed,
+  isVideoVisible: poster is empty
+} %}
+<div class="ModuleVideo CaseModule container{% if background %} bg-primary{% endif %}" x-data="ModuleVideo({{ settings|json_encode|e('html_attr') }})">
+  <figure class="ModuleVideo__Video z-1 aspect-w-16 aspect-h-9 bg-placeholder" x-appear:image>
+    {% if poster %}
+      <div
+        x-show="!isVideoVisible"
+        class="ModuleVideo__Poster z-1 cursor-pointer"
+        x-on:click.once="showVideo"
+        x-on:mouseenter="$dispatch('magnetic-cursor:enter')"
+        x-on:mouseleave="$dispatch('magnetic-cursor:leave')"
+      >
+        {% if poster.video %}
+          {% include '@Components/Video/Video.twig' with { src: poster.video, poster: poster.image ? poster.image.src : false, attr: 'autoplay loop muted playsinline disablePictureInPicture' ~ (poster.image ? ' aria-hidden="true"' : '') } only %}
+        {% elseif poster.image %}
+          {% include '@Components/Image/Image.twig' with poster.image only %}
+        {% endif %}
+
+        {% include '@Components/MagneticCursor/MagneticCursor.twig' with { settings: { icon: 'play' } } only %}
+      </div>
+    {% endif %}
+
+    <template x-if="isVideoVisible">
+      <div class="ModuleVideo__Embed" x-html="embed"></div>
+    </template>
+  </figure>
+</div>

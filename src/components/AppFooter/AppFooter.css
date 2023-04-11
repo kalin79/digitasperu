@@ -1,0 +1,22 @@
+.AppFooter {
+  &__Logo {
+    size: .9375em 1em;
+    font-size: 2.5rem;
+  }
+
+  &__Nav {
+    a {
+      @apply hover:opacity-60 focus:opacity-60;
+      transition: .15s ease-in-out;
+    }
+  }
+
+  .FooterContact {
+    &::after {
+      content: "";
+      @apply row-start-2 col-start-1 self-end relative -z-1 left-1/2 w-screen h-full bg-black;
+      @apply lg:row-start-1 lg:row-span-2 lg:h-1/2;
+      margin-left: calc(theme('width.screen') / -2);
+    }
+  }
+}

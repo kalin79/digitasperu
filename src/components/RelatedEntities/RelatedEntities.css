@@ -1,0 +1,17 @@
+.RelatedEntities {
+  &__Slider {
+    @apply relative;
+
+    &::before {
+      /* increase swipe area */
+      content: "";
+      @apply absolute -inset-y-80 inset-x-0;
+    }
+  }
+
+  .CardEntity--insight {
+    .CardEntity__Thumbnail {
+      --aspect-ratio: 312/512;
+    }
+  }
+}

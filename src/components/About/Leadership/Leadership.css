@@ -1,0 +1,15 @@
+.Leadership {
+  --image-placeholder-color: hsl(0, 0%, 5%);
+
+  .Slider__Track {
+    @apply space-y-20 lg:space-y-40;
+  }
+
+  &__Slide {
+    @apply w-216 lg:w-224;
+
+    .Icon {
+      font-size: 1.875rem;
+    }
+  }
+}

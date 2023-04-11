@@ -1,0 +1,43 @@
+{% embed '@Components/Hero/Hero.twig' with { class: 'HeroJob text-primary-contrast' } %}
+  {% block content %}
+    <div class="row-start-2">
+      <h1 class="HeroJob__Title title-big lg:max-w-9/12" x-appear:title="$store.app.isReady">{{ title }}</h1>
+    </div>
+    <div class="row-start-1 col-start-2 col-span-10 self-end mb-32">
+      {% if city %}
+        {{- 'Location: %s'|format(city) -}}
+      {% endif %}
+    </div>
+
+    <div class="lg:row-start-3 col-span-default lg:col-start-2 lg:col-span-2 flex flex-col lg:justify-center lg:h-56 mt-32 lg:mt-16">
+      <div class="cap-title-small-italic">{{ 'Published %s'|format(date|date('F j, Y')) }}</div>
+      {% if jobId %}
+        <div class="cap-title-small-italic">{{ 'Job Id: %s'|format(jobId) }}</div>
+      {% endif %}
+    </div>
+    <div class="lg:row-start-3 col-span-default lg:col-start-4 lg:col-span-6 self-end lg:self-center flex flex-wrap justify-between items-center mt-16">
+      <div class="flex space-x-12 lg:space-x-16">
+        {% include '@Components/Button/Button.twig' with { label: 'Apply now', link: '#apply-now', style: 'solid' } only %}
+        {% include '@Components/Button/Button.twig' with { label: 'Refer a friend', link: '#refer-a-friend', style: 'solid' } only %}
+      </div>
+    </div>
+
+    <div class="row-start-4 lg:row-start-1 col-start-11 col-span-2 lg:col-auto absolute top-16 lg:top-0 right-0 lg:-mt-8 px-24 lg:px-56 pointer-events-none">
+      <div class="flex justify-end items-center lg:justify-center h-40 lg:w-40">
+        {% include '@Components/Share/Share.twig' with { shareText: title, uniqid: 'HeroJob' } only %}
+      </div>
+    </div>
+  {% endblock %}
+{% endembed %}
+
+{% embed '@Components/PageNavbar/PageNavbar.twig' with { shareText: shareText } only %}
+  {% block inner %}
+    <div class="flex-1 flex lg:justify-end items-center space-x-12 lg:space-x-16 bg-global lg:bg-transparent pointer-events-auto">
+      {% include '@Components/Button/Button.twig' with { label: 'Apply now', link: '#apply-now', size: 'small', attr: 'tabindex="-1"' } only %}
+      <span class="hidden lg:block">
+        {% include '@Components/Button/Button.twig' with { label: 'Refer a friend', link: '#refer-a-friend', size: 'small', attr: 'tabindex="-1"' } only %}
+      </span>
+      {{ parent() }}
+    </div>
+  {% endblock %}
+{% endembed %}

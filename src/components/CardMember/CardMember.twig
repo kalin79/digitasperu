@@ -1,0 +1,10 @@
+<div class="CardEntity CardEntity--member relative">
+  <div class="CardEntity__Thumbnail bg-placeholder" x-appear:image>
+    {% if thumbnail %}
+      {% include '@Components/Image/Image.twig' with thumbnail|merge({ class: 'w-full' }) only %}
+    {% endif %}
+  </div>
+  <div class="CardEntity__Body pt-8">
+    {% include '@Components/Author/Author.twig' with { name: name, title: title } only %}
+  </div>
+</div>

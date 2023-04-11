@@ -1,0 +1,14 @@
+.BannerNews {
+  &__Icon {
+    font-size: 1.875rem; /* 30px */
+  }
+
+  &__Title {
+    perspective: 500px;
+  }
+
+  a {
+    @apply hover:opacity-60 focus:opacity-60;
+    transition: .15s ease-in-out;
+  }
+}

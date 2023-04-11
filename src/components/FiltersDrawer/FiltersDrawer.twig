@@ -1,0 +1,88 @@
+<div
+  x-cloak
+  x-data="FiltersDrawer"
+  class="FiltersDrawer fixed z-drawer inset-0 container cursor-pointer pointer-events-none"
+  x-bind:class="{ 'pointer-events-auto': isOpened }"
+  role="dialog"
+  aria-labelledby="FiltersDrawerTitle"
+  aria-modal="true"
+  x-bind="$listeners"
+  x-trap="isOpen"
+>
+  <div
+    x-ref="backdrop"
+    class="row-start-1 col-span-full h-full -mx-container bg-black bg-opacity-80 lg:bg-opacity-0"
+    x-on:click="close"
+    x-on:mouseenter="isOutside = true"
+    x-on:mouseleave="isOpen && (isOutside = false)"
+  ></div>
+  <div class="z-0 row-start-1 col-span-full lg:col-start-6 lg:col-span-7 lg:h-screen mt-128 lg:mt-0">
+    <aside
+      x-ref="container"
+      class="FiltersDrawer__Container relative h-full lg:ml-0 lg:-mr-container cursor-default text-white"
+    >
+      <div x-ref="background" class="absolute -z-1 inset-0 bg-gray-900 pointer-events-none"></div>
+      <div class="h-full lg:pr-container overflow-y-auto overscroll-contain">
+        <div class="container lg:grid-cols-7 pt-96 pb-56 lg:py-152 lg:px-0">
+          <div class="row-start-1 col-span-default lg:col-start-3 lg:col-span-4 space-y-48 lg:space-y-64">
+            <div x-ref="title" class="-mb-8 font-roman text-32 tracking-tight" id="FiltersDrawerTitle">
+              {{- title -}}
+            </div>
+
+            {% for type in types %}
+              <fieldset
+                x-ref="filter"
+                class="Filter"
+                x-bind="filterProps"
+                data-taxonomy="{{ type.taxonomy }}"
+              >
+                <legend class="mb-32 leading-16">
+                  <span class="cap-title-small-italic uppercase">{{ type.label }}</span>
+                </legend>
+                <div class="Filter__Terms" role="listbox">
+                  {% for term in type.terms %}
+                    {% set inputId = [type.taxonomy, term.id]|join('-') %}
+                    <div class="Filter__Term" role="listitem" data-term-id="{{ term.id }}" data-term-title="{{ term.title|e('html_attr') }}">
+                      <input class="Filter__Term__Input" type="checkbox" id="{{ inputId }}" value="{{ type.taxonomy }}:{{ term.id }}" x-model="queries" tabindex="{{ loop.first ? 0 : -1 }}">
+                      <label class="Filter__Term__Label cap-small leading-24" for="{{ inputId }}">{{ term.title }}</label>
+                      {% if term.thumbnail %}
+                        <span class="Filter__Term__Thumbnail" aria-hidden="true" x-mouse-driven="$isDesktop">
+                          {% include '@Components/Image/Image.twig' with term.thumbnail only %}
+                        </span>
+                      {% endif %}
+                    </div>
+                  {% endfor %}
+                </div>
+              </fieldset>
+            {% endfor %}
+          </div>
+
+          <div class="hidden lg:block row-start-1 col-start-1 col-span-2">
+            <div x-ref="submit" class="lg:sticky lg:top-scroll-padding pt-80 -mr-gutter text-center">
+              {% include '@Components/Button/Button.twig' with {
+                tag: 'button',
+                alpine: true,
+                label: 'submitLabel',
+                style: 'solid',
+                attr: 'type="button" x-show="hasQueries" x-transition @click="close"'
+              } %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="FiltersDrawer__Close MagneticCursor absolute lg:fixed top-0 inset-x-0 lg:right-auto flex justify-center"
+        x-bind:class="{ 'pointer-events-none': isOutside }"
+        x-data="MagneticCursor"
+        x-bind="$props"
+      >
+        {% include '@Components/RoundButton/RoundButton.twig' with {
+          icon: 'close',
+          class: 'FiltersDrawer__CloseButton',
+          attr: 'x-ref="close" aria-label="Close filters" x-on:click.prevent="close"'
+        } only %}
+      </div>
+    </aside>
+  </div>
+</div>

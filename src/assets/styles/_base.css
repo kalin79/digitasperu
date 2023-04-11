@@ -1,0 +1,65 @@
+@import "tailwindcss/base";
+
+@layer base {
+  :root {
+    --global-spacing-vertical: theme('spacing.80');
+    --global-bg-color: theme('backgroundColor.white');
+    --global-color: theme('textColor.black');
+    --scroll-offset-y: calc($header-height-mobile + theme('spacing.40')); /* results must be pre-computed */
+    --primary-color: transparent;
+
+    @screen lg {
+      --global-spacing-vertical: theme('spacing.160');
+      --scroll-offset-y: calc($header-height-desktop + theme('spacing.80')); /* results must be pre-computed */
+    }
+  }
+
+  *, *::before, *::after {
+    backface-visibility: hidden;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+
+  html {
+    scroll-padding: var(--scroll-offset-y) 0 0 0;
+  }
+
+  body {
+    color: var(--global-color, black);
+  }
+
+  ::selection {
+    @apply bg-black bg-opacity-50;
+  }
+
+  button, input, optgroup, select, textarea {
+    font-weight: inherit;
+  }
+
+  button, select {
+    text-transform: inherit;
+  }
+
+  select:-ms-expand {
+    display: none;
+  }
+
+  input, select, textarea {
+    background: none;
+  }
+
+  hr {
+    color: currentColor; /* Fix for Firefox */
+    @apply border-t border-current opacity-20;
+  }
+
+  [class*="hover:"] {
+    /*! purgecss ignore current */
+    transition: $transition-default;
+  }
+}

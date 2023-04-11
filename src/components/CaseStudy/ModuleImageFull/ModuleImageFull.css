@@ -1,0 +1,7 @@
+.ModuleImageFull {
+  @apply z-1 mt-0 py-0;
+
+  & + * {
+    @apply mt-0;
+  }
+}
